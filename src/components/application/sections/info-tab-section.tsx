@@ -1,6 +1,4 @@
-import { cn } from "@/components/lib/utils"
 import { TabsContent } from "@/components/ui/tabs"
-import { ApplicationLoadingState } from "../application-loading-state"
 import { SectionNavigation } from "./section-navigation"
 
 export const InfoTabSection = ({
@@ -11,13 +9,8 @@ export const InfoTabSection = ({
   isLoading?: boolean
 }) => (
   <TabsContent value="info" className="space-y-6">
-    <div className="relative">
-      <div
-        className={cn(
-          "space-y-2 transition-opacity duration-200",
-          isLoading && "pointer-events-none opacity-35"
-        )}
-      >
+    <div className="space-y-2">
+      <div>
         <div className="space-y-6">
           <div>
             <h2 className="text-3xl font-semibold mb-6 mt-6">
@@ -104,12 +97,6 @@ export const InfoTabSection = ({
           </div>
         </div>
       </div>
-
-      {isLoading ? (
-        <div className="absolute inset-0 flex items-center justify-center rounded-3xl bg-white/45 px-4 backdrop-blur-[3px]">
-          <ApplicationLoadingState stage="application" variant="modal" />
-        </div>
-      ) : null}
     </div>
 
     <SectionNavigation

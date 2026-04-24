@@ -47,10 +47,20 @@ const companyLinks = [
   { name: "Contact Info", href: "/contact-info" },
 ]
 
-export const Footer: FC = () => (
-  <footer className="bg-neutral-900 text-white">
-    <div className="container mx-auto">
-      <div className="flex flex-col md:flex-row items-center justify-between py-8 px-8">
+interface FooterProps {
+  withTopFade?: boolean
+}
+
+export const Footer: FC<FooterProps> = ({ withTopFade = false }) => (
+  <footer className="relative bg-neutral-900 text-white">
+    {withTopFade ? (
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 -top-24 h-24 bg-gradient-to-b from-transparent to-neutral-900"
+      />
+    ) : null}
+    <div className="relative container mx-auto">
+      <div className="flex flex-col md:flex-row items-center justify-between px-8 pb-8 pt-10 md:pt-12">
         <div className="mb-6 md:mb-0">
           <Link to="/">
             <img className="p-2" src="logo.svg" alt="logo" />

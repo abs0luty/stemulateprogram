@@ -303,115 +303,125 @@ export const ApplicationForm = () => {
   }
 
   return (
-    <div className="w-full max-w-4xl mx-auto">
-      <div className="flex justify-end mt-12 space-x-2">
-        <Button className="bg-neutral-900 hover:bg-neutral-800 border-b-0 rounded-b-none">
-          <UserIcon />
-          <p className="text-xs">
-            {user.email.substring(0, 18)}
-            {user.email.length > 17 && <>...</>}
-          </p>
-        </Button>
-        <Button
-          variant="outline"
-          onClick={handleLogout}
-          className="border-b-0 text-xs rounded-b-none"
-        >
-          <LogOutIcon />
-          Logout
-        </Button>
+    <div className="relative w-full max-w-4xl mx-auto">
+      <div
+        className={loading ? "pointer-events-none select-none opacity-35" : ""}
+      >
+        <div className="flex justify-end mt-12 space-x-2">
+          <Button className="bg-neutral-900 hover:bg-neutral-800 border-b-0 rounded-b-none">
+            <UserIcon />
+            <p className="text-xs">
+              {user.email.substring(0, 18)}
+              {user.email.length > 17 && <>...</>}
+            </p>
+          </Button>
+          <Button
+            variant="outline"
+            onClick={handleLogout}
+            className="border-b-0 text-xs rounded-b-none"
+          >
+            <LogOutIcon />
+            Logout
+          </Button>
+        </div>
+
+        <Card className="rounded-t-none">
+          {applicationExists && !loading ? (
+            <CardContent className="flex flex-col items-center justify-center h-[60vh] space-y-6">
+              <h1 className="text-3xl font-semibold">Application Submitted</h1>
+              <p className="text-center text-muted-foreground max-w-md">
+                Thank you for submitting your application! If you have any
+                questions or need to update your information, please contact us.
+              </p>
+            </CardContent>
+          ) : (
+            <CardContent className="pt-6 px-3 sm:px-6">
+              <Tabs
+                value={loading ? "info" : activeTab}
+                onValueChange={(value) =>
+                  !loading && setActiveTab(value as ApplicationTab)
+                }
+              >
+                <div className="relative mb-8">
+                  <TabsList
+                    ref={tabsRef}
+                    className="bg-white flex w-full overflow-x-auto snap-x scrollbar-none py-1 justify-start"
+                    style={{ scrollBehavior: "smooth" }}
+                  >
+                    {tabOrder.map((tab, index) => {
+                      const isErrorTab = hasErrorsInTab(tab)
+
+                      return (
+                        <TabsTrigger
+                          key={tab}
+                          value={tab}
+                          disabled={loading}
+                          className={`data-[state=active]:shadow-none text-sm whitespace-nowrap px-3 snap-start ${
+                            activeTab === tab ? "active-tab" : ""
+                          }`}
+                          onClick={() => scrollToTab(index)}
+                        >
+                          {tabLabels[tab]}
+                          {isErrorTab && (
+                            <AlertCircle className="inline-block ml-1 text-red-500 h-4 w-4" />
+                          )}
+                        </TabsTrigger>
+                      )
+                    })}
+                  </TabsList>
+                </div>
+
+                <Form {...form}>
+                  <form
+                    onSubmit={form.handleSubmit(onSubmit)}
+                    className="space-y-8"
+                  >
+                    <InfoTabSection
+                      onStart={() => setActiveTab("personal")}
+                      isLoading={loading}
+                    />
+                    {!loading ? (
+                      <>
+                        <PersonalTabSection
+                          form={form}
+                          onNext={() => nextTab("personal")}
+                        />
+                        <AcademicTabSection
+                          form={form}
+                          onPrevious={() => setActiveTab("personal")}
+                          onNext={() => nextTab("academic")}
+                        />
+                        <ParentTabSection
+                          form={form}
+                          onPrevious={() => setActiveTab("academic")}
+                          onNext={() => nextTab("parent")}
+                        />
+                        <ResearchTabSection
+                          form={form}
+                          onPrevious={() => setActiveTab("parent")}
+                          onNext={() => nextTab("research")}
+                        />
+                        <AdditionalTabSection
+                          form={form}
+                          onPrevious={() => setActiveTab("research")}
+                          onSubmitAttempt={handleSubmitAttempt}
+                          isSubmitting={isSubmitting}
+                        />
+                      </>
+                    ) : null}
+                  </form>
+                </Form>
+              </Tabs>
+            </CardContent>
+          )}
+        </Card>
       </div>
 
-      <Card className="rounded-t-none">
-        {applicationExists && !loading ? (
-          <CardContent className="flex flex-col items-center justify-center h-[60vh] space-y-6">
-            <h1 className="text-3xl font-semibold">Application Submitted</h1>
-            <p className="text-center text-muted-foreground max-w-md">
-              Thank you for submitting your application! If you have any
-              questions or need to update your information, please contact us.
-            </p>
-          </CardContent>
-        ) : (
-          <CardContent className="pt-6 px-3 sm:px-6">
-            <Tabs
-              value={loading ? "info" : activeTab}
-              onValueChange={(value) =>
-                !loading && setActiveTab(value as ApplicationTab)
-              }
-            >
-              <div className="relative mb-8">
-                <TabsList
-                  ref={tabsRef}
-                  className="bg-white flex w-full overflow-x-auto snap-x scrollbar-none py-1 justify-start"
-                  style={{ scrollBehavior: "smooth" }}
-                >
-                  {tabOrder.map((tab, index) => {
-                    const isErrorTab = hasErrorsInTab(tab)
-
-                    return (
-                      <TabsTrigger
-                        key={tab}
-                        value={tab}
-                        disabled={loading}
-                        className={`data-[state=active]:shadow-none text-sm whitespace-nowrap px-3 snap-start ${
-                          activeTab === tab ? "active-tab" : ""
-                        }`}
-                        onClick={() => scrollToTab(index)}
-                      >
-                        {tabLabels[tab]}
-                        {isErrorTab && (
-                          <AlertCircle className="inline-block ml-1 text-red-500 h-4 w-4" />
-                        )}
-                      </TabsTrigger>
-                    )
-                  })}
-                </TabsList>
-              </div>
-
-              <Form {...form}>
-                <form
-                  onSubmit={form.handleSubmit(onSubmit)}
-                  className="space-y-8"
-                >
-                  <InfoTabSection
-                    onStart={() => setActiveTab("personal")}
-                    isLoading={loading}
-                  />
-                  {!loading ? (
-                    <>
-                      <PersonalTabSection
-                        form={form}
-                        onNext={() => nextTab("personal")}
-                      />
-                      <AcademicTabSection
-                        form={form}
-                        onPrevious={() => setActiveTab("personal")}
-                        onNext={() => nextTab("academic")}
-                      />
-                      <ParentTabSection
-                        form={form}
-                        onPrevious={() => setActiveTab("academic")}
-                        onNext={() => nextTab("parent")}
-                      />
-                      <ResearchTabSection
-                        form={form}
-                        onPrevious={() => setActiveTab("parent")}
-                        onNext={() => nextTab("research")}
-                      />
-                      <AdditionalTabSection
-                        form={form}
-                        onPrevious={() => setActiveTab("research")}
-                        onSubmitAttempt={handleSubmitAttempt}
-                        isSubmitting={isSubmitting}
-                      />
-                    </>
-                  ) : null}
-                </form>
-              </Form>
-            </Tabs>
-          </CardContent>
-        )}
-      </Card>
+      {loading ? (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/45 px-4 backdrop-blur-[6px]">
+          <ApplicationLoadingState stage={loadingStage} variant="modal" />
+        </div>
+      ) : null}
 
       <AlertDialog
         open={showValidationDialog}

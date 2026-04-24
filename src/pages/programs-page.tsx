@@ -1,14 +1,7 @@
 import { FC } from "react"
 import { StandartLayout } from "@/layout/standard-layout"
-import { BookTextIcon, UsersRoundIcon } from "lucide-react"
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
+import { CheckCircle2Icon, StarsIcon } from "lucide-react"
+import { Button } from "@/components/ui/button"
 import { Link } from "react-router-dom"
 
 const ProgramsPageContent: FC = () => {
@@ -16,7 +9,8 @@ const ProgramsPageContent: FC = () => {
     {
       name: "Research Writing Bootcamp",
       phase: "Step 1",
-      icon: <BookTextIcon className="w-6 h-6 text-red-600 mr-4" />,
+      description:
+        "An intensive foundation phase where students learn how strong research is framed, structured, and defended.",
       features: [
         "Interactive workshops & lectures",
         "Introduction to diverse research methodologies",
@@ -29,7 +23,8 @@ const ProgramsPageContent: FC = () => {
     {
       name: "Individual Research Mentorship Program",
       phase: "Step 2",
-      icon: <UsersRoundIcon className="w-8 h-8 text-red-600 mr-4" />,
+      description:
+        "A high-touch mentorship phase focused on taking a student's idea through refinement, execution, and final presentation.",
       features: [
         "Personalized research topic development",
         "Regular one-on-one feedback sessions",
@@ -42,101 +37,96 @@ const ProgramsPageContent: FC = () => {
   ]
 
   return (
-    <main className="min-h-screen bg-white text-black py-24 px-4 md:px-8 flex flex-col items-center">
-      <div className="max-w-6xl mx-auto space-y-10 w-full">
-        <p className="font-bold text-3xl md:text-4xl md:text-left">
-          Programs at STEMulate
-        </p>
-        <p className="text-lg sm:text-xl text-gray-700 md:text-left">
-          At STEMulate, we believe in nurturing future researchers through a
-          structured yet personalized approach. Our program is designed in two
-          distinct phases to ensure comprehensive development.
-        </p>
+    <main className="min-h-screen bg-white px-4 py-20 text-black md:px-8">
+      <div className="mx-auto flex w-full max-w-5xl flex-col gap-10">
+        <section className="space-y-3">
+          <div className="space-y-4">
+            <div className="space-y-3">
+              <h1 className="max-w-lg text-4xl font-semibold leading-tight md:text-5xl">
+                Our <span className="font-serif">Programs</span>
+              </h1>
+              <p className="max-w-2xl text-lg leading-8 text-gray-600">
+                We guide students through a clear two-phase pathway: first,
+                they build the research fundamentals; then, they turn that
+                foundation into an original project with close mentorship.
+              </p>
+            </div>
+          </div>
+        </section>
 
-        {/* Outer container for Shadcn Table */}
-        {/* Shadcn Table often handles its own border/shadow */}
-        <div className="rounded-lg border shadow-sm">
-          <Table className="w-full">
-            <TableHeader>
-              <TableRow className="hidden md:table-row text-lg">
-                {" "}
-                <TableHead className="w-[250px] p-3 text-black font-semibold">
-                  Program
-                </TableHead>{" "}
-                <TableHead className="w-[400px] p-3 text-black font-semibold">
-                  Key Features
-                </TableHead>{" "}
-                <TableHead className="w-[300px] p-3 text-black font-semibold">
-                  Outcome
-                </TableHead>{" "}
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {programs.map((program, index) => (
-                <TableRow
-                  key={index}
-                  className="flex flex-col md:table-row md:border-b transition-colors hover:bg-gray-50
-                             p-4 md:p-0 mb-4 md:mb-0 rounded-lg shadow-sm bg-white md:rounded-none md:shadow-none"
-                >
-                  {/* Program Name & Phase */}
-                  <TableCell className="md:w-[250px]">
-                    {" "}
-                    {/* Apply width for desktop */}
-                    <span className="md:hidden text-sm font-semibold text-gray-500 block mb-1">
-                      Program
-                    </span>
-                    <div className="flex items-center text-xl font-semibold mb-2 font-serif">
-                      {program.icon}
-                      {program.name}
-                    </div>
-                    <span className="text-sm font-medium text-red-600 bg-red-50 px-2 py-1 rounded-full">
+        <section className="relative pl-10 md:pl-12">
+          <div
+            aria-hidden="true"
+            className="absolute left-3 top-2 h-[calc(100%-0.5rem)] w-px bg-neutral-200 md:left-4"
+          />
+          <div className="space-y-8">
+            {programs.map((program) => (
+              <article
+                key={program.name}
+                className="relative grid gap-5 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]"
+              >
+                <div className="absolute -left-10 top-1.5 flex h-6 w-6 items-center justify-center rounded-full border border-neutral-300 bg-white md:-left-12">
+                  <div className="h-2.5 w-2.5 rounded-full bg-neutral-700" />
+                </div>
+
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <span className="text-sm font-semibold text-gray-500">
                       {program.phase}
                     </span>
-                  </TableCell>
+                    <h2 className="max-w-sm text-2xl font-semibold leading-tight md:text-3xl">
+                      <span className="font-serif">{program.name}</span>
+                    </h2>
+                    <p className="max-w-xl text-base leading-7 text-gray-600">
+                      {program.description}
+                    </p>
+                  </div>
+                </div>
 
-                  {/* Key Features */}
-                  <TableCell className="md:w-[400px]">
-                    {" "}
-                    {/* Apply width for desktop */}
-                    <span className="md:hidden text-sm font-semibold text-gray-500 block mb-1">
-                      Key Features
-                    </span>
-                    <ul className="list-disc list-inside space-y-1 text-base text-gray-700">
-                      {program.features.map((feature, i) => (
-                        <li key={i}>{feature}</li>
-                      ))}
-                    </ul>
-                  </TableCell>
+                <div className="rounded-[1.25rem] border border-neutral-200 bg-white p-5 md:p-6">
+                  <ul className="mt-4 space-y-3">
+                    {program.features.map((feature) => (
+                      <li
+                        key={feature}
+                        className="flex items-start gap-3 text-sm leading-6 text-gray-700 md:text-base"
+                      >
+                        <CheckCircle2Icon className="mt-0.5 h-4 w-4 shrink-0 text-neutral-500" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="mt-5 border-t border-neutral-200 pt-5 text-sm leading-6 text-gray-600 md:text-base">
+                    {program.outcome}
+                  </p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
 
-                  {/* Outcome */}
-                  <TableCell className="md:w-[300px]">
-                    {" "}
-                    {/* Apply width for desktop */}
-                    <span className="md:hidden text-sm font-semibold text-gray-500 block mb-1">
-                      Outcome
-                    </span>
-                    <span className="text-gray-700 text-base">
-                      {program.outcome}
-                    </span>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
-
-        <div className="mt-12">
-          <p className="text-lg md:text-xl text-gray-700">
-            Interested in joining STEMulate? Learn more about the application
-            process:{" "}
+        <section className="rounded-[1.5rem] border border-neutral-200 bg-neutral-50 p-6 md:p-8">
+          <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+            <div className="max-w-2xl space-y-2">
+              <p className="text-2xl font-semibold leading-tight">
+                Interested in joining STEMulate?
+              </p>
+              <p className="text-base leading-7 text-gray-600">
+                Learn more about the application process and what to expect.
+              </p>
+            </div>
             <Link
               to="/apply"
-              className="underline text-red-600 hover:text-red-800 transition-colors duration-200"
+              className="w-fit"
             >
-              Apply now!
+              <Button
+                className="flex items-center rounded-xl bg-red-600 px-5 py-6 text-sm font-semibold text-white transition duration-300 ease-in-out hover:bg-red-700 sm:text-base"
+              >
+                <StarsIcon className="h-5 w-5" />
+                Apply now
+              </Button>
             </Link>
-          </p>
-        </div>
+          </div>
+        </section>
       </div>
     </main>
   )

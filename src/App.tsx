@@ -9,13 +9,20 @@ import { ContactInfoPage } from "./pages/contact-info-page"
 import { ProgramsPage } from "./pages/programs-page"
 import { PrivacyPolicyPage } from "./pages/privacy-policy-page"
 import { TermsOfServicePage } from "./pages/terms-of-service-page"
-import { lazy } from "react"
+import { lazy, useEffect } from "react"
+import { preloadWorldMapGeography } from "./components/landing/world-map"
 
 const NotFoundPage = lazy(() =>
   import("./pages/404").then((module) => ({ default: module.NotFoundPage }))
 )
 
 export const App = () => {
+  useEffect(() => {
+    preloadWorldMapGeography().catch((error) => {
+      console.error("Failed to preload landing map", error)
+    })
+  }, [])
+
   return (
     <>
       <TooltipProvider delayDuration={50}>
