@@ -83,7 +83,8 @@ export const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
   ) => {
     const asYouType = new AsYouType()
 
-    const inputRef = React.useRef<HTMLInputElement>(null)
+    const [inputElement, setInputElement] =
+      React.useState<HTMLInputElement | null>(null)
 
     const [value, handlers, history] = useStateHistory(valueProp)
 
@@ -144,12 +145,12 @@ export const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
       if ((event.metaKey || event.ctrlKey) && event.key === "z") {
         handlers.back()
         if (
-          inputRef.current &&
+          inputElement &&
           history.current > 0 &&
           history.history[history.current - 1] !== undefined
         ) {
           event.preventDefault()
-          inputRef.current.value = history.history[history.current - 1] || ""
+          inputElement.value = history.history[history.current - 1] || ""
         }
       }
     }
@@ -190,10 +191,10 @@ export const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
                           key={country.iso3}
                           value={`${country.name} (+${country.phone_code})`}
                           onSelect={() => {
-                            if (inputRef.current) {
-                              inputRef.current.value = `+${country.phone_code}`
+                            if (inputElement) {
+                              inputElement.value = `+${country.phone_code}`
                               handlers.set(`+${country.phone_code}`)
-                              inputRef.current.focus()
+                              inputElement.focus()
                             }
                             setCountryCode(country.iso2 as CountryCode)
                             setOpenCommand(false)
@@ -229,7 +230,7 @@ export const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
         </Popover>
         <Input
           ref={(node) => {
-            inputRef.current = node
+            setInputElement(node)
             if (typeof ref === "function") {
               ref(node)
             } else if (ref) {
