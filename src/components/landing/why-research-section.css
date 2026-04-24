@@ -3,12 +3,9 @@
   z-index: 0;
   overflow: hidden;
   isolation: isolate;
-}
-
-.section-with-fixed-bg::before {
-  content: "";
-  background: url("/university.webp") no-repeat center center / cover;
-  position: absolute;
-  inset: 0;
-  z-index: -1;
+  background-image: url("/university.webp");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
 }
