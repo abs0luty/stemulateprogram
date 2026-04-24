@@ -119,7 +119,7 @@ const ProgramsPageContent: FC = () => {
               className="w-fit"
             >
               <Button
-                className="flex items-center rounded-xl bg-red-600 px-5 py-6 text-sm font-semibold text-white transition duration-300 ease-in-out hover:bg-red-700 sm:text-base"
+                className="flex items-center rounded-xl bg-red-600 px-5 py-6 text-sm font-semibold text-white shadow-[0_0_0_1px_rgba(220,38,38,0.08),0_0_32px_rgba(220,38,38,0.28)] transition duration-300 ease-in-out hover:bg-red-700 hover:shadow-[0_0_0_1px_rgba(220,38,38,0.12),0_0_40px_rgba(220,38,38,0.34)] sm:text-base"
               >
                 <StarsIcon className="h-5 w-5" />
                 Apply now

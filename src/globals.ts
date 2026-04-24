@@ -1,4 +1,4 @@
-export const HCAPTCHA_SITE_KEY = "7c9cce26-057a-47ec-963c-627ede2253ae"
+export const HCAPTCHA_SITE_KEY = "0a3837d4-8436-4ef4-929a-a7a686781ddc"
 
 export const SUPABASE_URL = "https://txfbwyivfbdivepydzbz.supabase.co"
 export const SUPABASE_KEY =
