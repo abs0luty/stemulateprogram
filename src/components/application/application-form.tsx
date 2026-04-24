@@ -15,7 +15,7 @@ import {
 } from "lucide-react"
 import { toast } from "@/hooks/use-toast"
 import { AuthSection } from "./auth/auth-section"
-import { Spinner } from "./spinner"
+import { ApplicationLoadingState } from "./application-loading-state"
 import { supabaseClient } from "@/supabase"
 import confetti from "canvas-confetti"
 import {
@@ -23,6 +23,7 @@ import {
   AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
+  AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
@@ -49,6 +50,9 @@ export const ApplicationForm = () => {
   const [loading, setLoading] = useState(true)
   const [user, setUser] = useState<any>(null)
   const [isAuthChecked, setIsAuthChecked] = useState(false)
+  const [loadingStage, setLoadingStage] = useState<"session" | "application">(
+    "session"
+  )
   const [applicationExists, setApplicationExists] = useState(false)
   const [activeTab, setActiveTab] = useState<ApplicationTab>("info")
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -56,6 +60,7 @@ export const ApplicationForm = () => {
   const [showValidationDialog, setShowValidationDialog] = useState(false)
 
   const tabsRef = useRef<HTMLDivElement>(null)
+  const currentUserIdRef = useRef<string | null>(null)
 
   const handleLogout = async () => {
     localStorage.removeItem("supabase.auth.token")
@@ -63,26 +68,44 @@ export const ApplicationForm = () => {
   }
 
   useEffect(() => {
+    setLoadingStage("session")
+
     supabaseClient.auth.getSession().then(({ data }) => {
+      setIsAuthChecked(true)
+
       if (data?.session?.user) {
         setUser(data.session.user)
-        setIsAuthChecked(true)
+        currentUserIdRef.current = data.session.user.id
 
         if (data.session.user.id) {
           checkApplicationExistence(data.session.user.id)
         }
+
+        return
       }
+
+      setLoading(false)
     })
 
     const { data: authListener } = supabaseClient.auth.onAuthStateChange(
       async (_, session) => {
         if (session?.user) {
           setUser(session.user)
-          if (session.user.id) {
+          setIsAuthChecked(true)
+
+          if (
+            session.user.id &&
+            currentUserIdRef.current !== session.user.id
+          ) {
+            currentUserIdRef.current = session.user.id
             checkApplicationExistence(session.user.id)
           }
         } else {
+          currentUserIdRef.current = null
           setUser(null)
+          setApplicationExists(false)
+          setLoading(false)
+          setLoadingStage("session")
         }
 
         setIsAuthChecked(true)
@@ -96,6 +119,7 @@ export const ApplicationForm = () => {
 
   const checkApplicationExistence = async (userId: string) => {
     setLoading(true)
+    setLoadingStage("application")
 
     try {
       const { data: applications, error } = await supabaseClient
@@ -267,7 +291,7 @@ export const ApplicationForm = () => {
   }
 
   if (!isAuthChecked) {
-    return <Spinner />
+    return <ApplicationLoadingState stage={loadingStage} />
   }
 
   if (!user) {
@@ -299,9 +323,7 @@ export const ApplicationForm = () => {
       </div>
 
       <Card className="rounded-t-none">
-        {loading ? (
-          <Spinner />
-        ) : applicationExists ? (
+        {applicationExists && !loading ? (
           <CardContent className="flex flex-col items-center justify-center h-[60vh] space-y-6">
             <h1 className="text-3xl font-semibold">Application Submitted</h1>
             <p className="text-center text-muted-foreground max-w-md">
@@ -312,8 +334,10 @@ export const ApplicationForm = () => {
         ) : (
           <CardContent className="pt-6 px-3 sm:px-6">
             <Tabs
-              value={activeTab}
-              onValueChange={(value) => setActiveTab(value as ApplicationTab)}
+              value={loading ? "info" : activeTab}
+              onValueChange={(value) =>
+                !loading && setActiveTab(value as ApplicationTab)
+              }
             >
               <div className="relative mb-8">
                 <TabsList
@@ -328,6 +352,7 @@ export const ApplicationForm = () => {
                       <TabsTrigger
                         key={tab}
                         value={tab}
+                        disabled={loading}
                         className={`data-[state=active]:shadow-none text-sm whitespace-nowrap px-3 snap-start ${
                           activeTab === tab ? "active-tab" : ""
                         }`}
@@ -348,32 +373,39 @@ export const ApplicationForm = () => {
                   onSubmit={form.handleSubmit(onSubmit)}
                   className="space-y-8"
                 >
-                  <InfoTabSection onStart={() => setActiveTab("personal")} />
-                  <PersonalTabSection
-                    form={form}
-                    onNext={() => nextTab("personal")}
+                  <InfoTabSection
+                    onStart={() => setActiveTab("personal")}
+                    isLoading={loading}
                   />
-                  <AcademicTabSection
-                    form={form}
-                    onPrevious={() => setActiveTab("personal")}
-                    onNext={() => nextTab("academic")}
-                  />
-                  <ParentTabSection
-                    form={form}
-                    onPrevious={() => setActiveTab("academic")}
-                    onNext={() => nextTab("parent")}
-                  />
-                  <ResearchTabSection
-                    form={form}
-                    onPrevious={() => setActiveTab("parent")}
-                    onNext={() => nextTab("research")}
-                  />
-                  <AdditionalTabSection
-                    form={form}
-                    onPrevious={() => setActiveTab("research")}
-                    onSubmitAttempt={handleSubmitAttempt}
-                    isSubmitting={isSubmitting}
-                  />
+                  {!loading ? (
+                    <>
+                      <PersonalTabSection
+                        form={form}
+                        onNext={() => nextTab("personal")}
+                      />
+                      <AcademicTabSection
+                        form={form}
+                        onPrevious={() => setActiveTab("personal")}
+                        onNext={() => nextTab("academic")}
+                      />
+                      <ParentTabSection
+                        form={form}
+                        onPrevious={() => setActiveTab("academic")}
+                        onNext={() => nextTab("parent")}
+                      />
+                      <ResearchTabSection
+                        form={form}
+                        onPrevious={() => setActiveTab("parent")}
+                        onNext={() => nextTab("research")}
+                      />
+                      <AdditionalTabSection
+                        form={form}
+                        onPrevious={() => setActiveTab("research")}
+                        onSubmitAttempt={handleSubmitAttempt}
+                        isSubmitting={isSubmitting}
+                      />
+                    </>
+                  ) : null}
                 </form>
               </Form>
             </Tabs>
@@ -385,23 +417,33 @@ export const ApplicationForm = () => {
         open={showValidationDialog}
         onOpenChange={setShowValidationDialog}
       >
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-amber-100 text-amber-600">
-              <OctagonAlert className="h-7 w-7" />
+        <AlertDialogContent className="max-w-[34rem] gap-5 rounded-3xl border-neutral-200 p-8">
+          <AlertDialogHeader className="space-y-4 text-left">
+            <div className="relative flex h-20 w-20 items-center justify-center">
+              <div className="absolute inset-0 rounded-[28px] bg-[radial-gradient(circle_at_top,_rgba(254,243,199,0.95),_rgba(255,255,255,0)_68%)]" />
+              <div className="relative flex h-16 w-16 items-center justify-center rounded-[24px] border border-neutral-200 bg-white shadow-[0_18px_40px_-24px_rgba(15,23,42,0.45)]">
+                <div className="relative h-11 w-11 rounded-full bg-gradient-to-b from-neutral-100 to-white">
+                  <span className="absolute left-[11px] top-[15px] h-1.5 w-1.5 rounded-full bg-neutral-700" />
+                  <span className="absolute right-[11px] top-[15px] h-1.5 w-1.5 rounded-full bg-neutral-700" />
+                  <span className="absolute left-1/2 top-[24px] h-[7px] w-[18px] -translate-x-1/2 rounded-full border-b-2 border-neutral-700" />
+                </div>
+              </div>
+              <div className="absolute -right-1 top-0 flex h-7 w-7 items-center justify-center rounded-full border border-amber-200 bg-amber-50 text-amber-600 shadow-sm">
+                <OctagonAlert className="h-3.5 w-3.5 stroke-[2.5]" />
+              </div>
             </div>
-            <AlertDialogTitle className="text-3xl font-serif">
-              Application Has Errors
+            <AlertDialogTitle className="max-w-md text-3xl font-serif leading-tight text-neutral-950">
+              We found mistakes in your applications
             </AlertDialogTitle>
           </AlertDialogHeader>
-          <div className="text-sm text-muted-foreground">
+          <AlertDialogDescription className="max-w-xl text-base leading-7 text-slate-600">
             You cannot submit the application while there are validation
             errors. Please review the highlighted fields and fix them before
             submitting.
-          </div>
-          <AlertDialogFooter>
+          </AlertDialogDescription>
+          <AlertDialogFooter className="justify-start">
             <AlertDialogAction
-              className="bg-neutral-900 hover:bg-neutral-800"
+              className="min-w-24 rounded-2xl bg-neutral-900 px-5 hover:bg-neutral-800"
               onClick={() => setShowValidationDialog(false)}
             >
               OK

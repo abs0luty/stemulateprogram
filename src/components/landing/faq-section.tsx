@@ -28,7 +28,7 @@ You can email us at admissions@stemulateprogram.com or connect with us on our so
   },
   {
     question: "How much does it cost?",
-    answer: `The program fee is $1500. Financial aid is available for the most competitive applicants.`,
+    answer: `The bootcamp costs $400. Early registration fee: $370 (for students who complete payment before May 20th). Limited discounts may also be available for the most competitive students in the bootcamp. If your code is valid, it applies a $50 discount to the program fee and marks your application for priority consideration during review.`,
   },
   {
     question: "How do I apply?",

@@ -43,23 +43,79 @@
     <script type="module" src="/src/main.tsx"></script>
     <script src="/scripts/three.min.js"></script>
     <script>
-      window.onload = function () {
-        function fadeOutLoadingDiv() {
+      ;(function () {
+        var minimumLoadingDuration = 1000
+        var loadingStartedAt = Date.now()
+        var progressValue = 0
+        var progressTimer = null
+
+        function setProgress(value) {
+          var progressBar = document.getElementById("loadingProgressBar")
+          var progressLabel = document.getElementById("loadingProgressLabel")
+          progressValue = Math.max(progressValue, Math.min(100, value))
+
+          if (progressBar) {
+            progressBar.style.width = progressValue + "%"
+          }
+
+          if (progressLabel) {
+            progressLabel.textContent = Math.round(progressValue) + "%"
+          }
+        }
+
+        function startProgressSimulation() {
+          function tick() {
+            var elapsed = Date.now() - loadingStartedAt
+            var nextValue = 20 + 75 * (1 - Math.exp(-elapsed / 1300))
+            setProgress(Math.min(94, nextValue))
+          }
+
+          tick()
+          progressTimer = window.setInterval(tick, 120)
+        }
+
+        function removeLoadingDiv() {
           var loadingDiv = document.getElementById("loadingDiv")
+
+          if (!loadingDiv) {
+            return
+          }
+
           loadingDiv.style.transition = "opacity 0.5s ease-in-out"
           loadingDiv.style.opacity = 0
+          loadingDiv.style.pointerEvents = "none"
 
-          setTimeout(function () {
-            if (loadingDiv && loadingDiv.parentNode) {
+          window.setTimeout(function () {
+            if (loadingDiv.parentNode) {
               loadingDiv.parentNode.removeChild(loadingDiv)
             }
           }, 500)
         }
 
-        setTimeout(function () {
-          fadeOutLoadingDiv()
-        }, 3000)
-      }
+        function finishLoading() {
+          var elapsed = Date.now() - loadingStartedAt
+          var remaining = Math.max(0, minimumLoadingDuration - elapsed)
+
+          window.setTimeout(function () {
+            if (progressTimer) {
+              window.clearInterval(progressTimer)
+            }
+
+            setProgress(100)
+            window.requestAnimationFrame(function () {
+              window.requestAnimationFrame(removeLoadingDiv)
+            })
+          }, remaining)
+        }
+
+        startProgressSimulation()
+
+        if (document.readyState === "complete") {
+          finishLoading()
+        } else {
+          window.addEventListener("load", finishLoading, { once: true })
+        }
+      })()
     </script>
     <div
       id="loadingDiv"
@@ -72,19 +128,65 @@
         height: 100%;
         z-index: 9999;
         display: flex;
-        justify-content: center;
         align-items: center;
+        justify-content: center;
         color: white;
         font-size: 2em;
       "
     >
-      Loading
-      <span class="dot">.</span>
-      <span class="dot">.</span>
-      <span class="dot">.</span>
+      <div class="loading-shell">
+        <div class="loading-title">
+          Loading
+          <span class="dot">.</span>
+          <span class="dot">.</span>
+          <span class="dot">.</span>
+        </div>
+        <div class="loading-progress-track">
+          <div id="loadingProgressBar" class="loading-progress-bar"></div>
+        </div>
+        <div id="loadingProgressLabel" class="loading-progress-label">0%</div>
+      </div>
     </div>
 
     <style>
+      .loading-shell {
+        width: min(320px, calc(100vw - 48px));
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .loading-title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .loading-progress-track {
+        width: 100%;
+        height: 8px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.14);
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+      }
+
+      .loading-progress-bar {
+        width: 0%;
+        height: 100%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, #ef4444 0%, #f87171 100%);
+        transition: width 0.18s ease-out;
+      }
+
+      .loading-progress-label {
+        font-size: 0.95rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        color: rgba(255, 255, 255, 0.72);
+      }
+
       .dot {
         animation: dot-pulse 1.5s infinite;
       }

@@ -33,7 +33,7 @@ const highlightedCountries = [
 
 export const HeroSection: FC = () => {
   return (
-    <section className="text-white bg-neutral-900 text-center pt-12 px-5 md:px-14">
+    <section className="text-white bg-neutral-900 text-center pt-12 px-5 pb-8 md:px-14 md:pb-12">
       <p className="font-semibold text-4xl md:text-5xl mb-4">
         <StaggerText className="font-serif" text="Develop your research" />
       </p>
@@ -57,23 +57,23 @@ export const HeroSection: FC = () => {
       <div className="mt-10 mb-8">
         <WorldMapSimple highlightedCountries={highlightedCountries} />
       </div>
-      <div className="flex flex-col md:flex-row justify-center items-center md:gap-4 gap-0">
+      <div className="flex flex-col md:flex-row justify-center items-center gap-10 md:gap-36 lg:gap-48 xl:gap-60">
         <DeadlineCountdown
           aboutDeadline="Priority Application Deadline"
-          targetDateString="End of June 16, 2025 (UTC-5)"
-          targetDate={new Date(Date.UTC(2025, 5, 17, 5, 0, 0))}
+          targetDateString="May 20, 2026 at 11:59 PM (UTC-5)"
+          targetDate={new Date(Date.UTC(2026, 4, 21, 4, 59, 0))}
           deadlineDescription="Applications submitted by this date will be given priority review."
           deadlinePassedHeader="Priority Application Deadline Passed"
-          deadlinePassedBrief="The priority deadline for submitting applications was June 16th at 11:59
+          deadlinePassedBrief="The priority deadline for submitting applications was May 20th at 11:59
           PM. Please contact the program coordinator for any inquiries."
         />
         <DeadlineCountdown
           aboutDeadline="Final Application Deadline"
-          targetDateString="End of June 23, 2025 (UTC-5)"
-          targetDate={new Date(Date.UTC(2025, 5, 24, 5, 0, 0))}
+          targetDateString="May 31, 2026 at 11:59 PM (UTC-5)"
+          targetDate={new Date(Date.UTC(2026, 5, 1, 4, 59, 0))}
           deadlineDescription="Applications submitted by this date will be considered for review."
           deadlinePassedHeader="Final Application Deadline Passed"
-          deadlinePassedBrief="The final deadline for submitting applications was June 23th at 11:59
+          deadlinePassedBrief="The final deadline for submitting applications was May 31st at 11:59
           PM. Please contact the program coordinator for any inquiries."
         />
       </div>
