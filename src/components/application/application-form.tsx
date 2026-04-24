@@ -58,6 +58,7 @@ export const ApplicationForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [showConfirmationDialog, setShowConfirmationDialog] = useState(false)
   const [showValidationDialog, setShowValidationDialog] = useState(false)
+  const [showLogoutDialog, setShowLogoutDialog] = useState(false)
 
   const tabsRef = useRef<HTMLDivElement>(null)
   const currentUserIdRef = useRef<string | null>(null)
@@ -317,7 +318,7 @@ export const ApplicationForm = () => {
           </Button>
           <Button
             variant="outline"
-            onClick={handleLogout}
+            onClick={() => setShowLogoutDialog(true)}
             className="border-b-0 text-xs rounded-b-none"
           >
             <LogOutIcon />
@@ -486,6 +487,45 @@ export const ApplicationForm = () => {
               }}
             >
               Yes
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      <AlertDialog open={showLogoutDialog} onOpenChange={setShowLogoutDialog}>
+        <AlertDialogContent className="max-w-[34rem] gap-5 rounded-3xl border-neutral-200 p-8">
+          <AlertDialogHeader className="space-y-4 text-left">
+            <div className="relative flex h-20 w-20 items-center justify-center">
+              <div className="absolute inset-0 rounded-[28px] bg-[radial-gradient(circle_at_top,_rgba(254,243,199,0.95),_rgba(255,255,255,0)_68%)]" />
+              <div className="relative flex h-16 w-16 items-center justify-center rounded-[24px] border border-neutral-200 bg-white shadow-[0_18px_40px_-24px_rgba(15,23,42,0.45)]">
+                <div className="relative h-11 w-11 rounded-full bg-gradient-to-b from-neutral-100 to-white">
+                  <span className="absolute left-[11px] top-[15px] h-1.5 w-1.5 rounded-full bg-neutral-700" />
+                  <span className="absolute right-[11px] top-[15px] h-1.5 w-1.5 rounded-full bg-neutral-700" />
+                  <span className="absolute left-1/2 top-[24px] h-[7px] w-[18px] -translate-x-1/2 rounded-full border-b-2 border-neutral-700" />
+                </div>
+              </div>
+              <div className="absolute -right-1 top-0 flex h-7 w-7 items-center justify-center rounded-full border border-amber-200 bg-amber-50 text-amber-600 shadow-sm">
+                <LogOutIcon className="h-3.5 w-3.5 stroke-[2.5]" />
+              </div>
+            </div>
+            <AlertDialogTitle className="text-3xl font-serif">
+              Log out?
+            </AlertDialogTitle>
+          </AlertDialogHeader>
+          <AlertDialogDescription className="max-w-xl text-base leading-7 text-slate-600">
+            You will be signed out of the application portal and returned to
+            the login screen.
+          </AlertDialogDescription>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-neutral-900 hover:bg-neutral-800"
+              onClick={() => {
+                handleLogout()
+                setShowLogoutDialog(false)
+              }}
+            >
+              Log out
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
