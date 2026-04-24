@@ -296,7 +296,7 @@ export const ApplicationForm = () => {
 
   if (!user) {
     return (
-      <div className="flex flex-col items-center justify-center h-[60vh] space-y-3">
+      <div className="flex h-[60vh] w-full max-w-5xl flex-col justify-center space-y-3">
         <AuthSection />
       </div>
     )

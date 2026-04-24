@@ -5,7 +5,7 @@ import { FC } from "react"
 const ApplicationFormPageContent: FC = () => {
   return (
     <>
-      <main className="min-h-screen bg-white py-8 px-4 md:px-8">
+      <main className="min-h-screen bg-white px-3 py-8 md:px-4">
         <div className="max-w-4xl mx-auto space-y-8">
           <ApplicationForm />
         </div>

@@ -24,7 +24,7 @@ export function AuthSection() {
   } = useAuthFlow()
 
   return (
-    <div className="mt-2 w-full md:w-4/6 space-y-3">
+    <div className="mt-2 w-full max-w-5xl space-y-3">
       {!isCodeSent ? (
         !signInOrSignUp ? (
           <AuthChoice
@@ -52,8 +52,6 @@ export function AuthSection() {
           onVerifyCode={handleVerifyCode}
           verifyingOtp={verifyingOtp}
           verifyCodeError={verifyCodeError}
-          onResendCode={() => handleSendOtp(signInOrSignUp === "signUp")} // Resend uses the same send logic
-          sendingOtp={sendingOtp}
           onGoBackToStart={resetAuthFlow} // Resets to initial state
         />
       )}

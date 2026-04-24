@@ -66,11 +66,15 @@ export const useAuthFlow = () => {
         }
       } else {
         setIsCodeSent(true)
+        setCode("")
       }
     } catch (err: any) {
       console.error("Error sending OTP:", err)
       setSendCodeError("An unexpected error occurred. Please try again.")
     } finally {
+      // Supabase captcha tokens are single-use for auth requests, so force a
+      // fresh challenge before any resend.
+      setCaptchaToken("")
       setSendingOtp(false)
     }
   }
