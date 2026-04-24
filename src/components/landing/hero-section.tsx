@@ -54,7 +54,7 @@ export const HeroSection: FC = () => {
           </Button>
         </Link>
       </div>
-      <div className="mt-10 mb-8">
+      <div className="mx-auto mt-10 mb-8 w-full md:max-w-4xl lg:max-w-5xl">
         <WorldMapSimple highlightedCountries={highlightedCountries} />
       </div>
       <div className="flex flex-col md:flex-row justify-center items-center gap-10 md:gap-36 lg:gap-48 xl:gap-60">
