@@ -1,6 +1,7 @@
 import * as React from "react"
 import * as LabelPrimitive from "@radix-ui/react-label"
 import { Slot } from "@radix-ui/react-slot"
+import { AlertCircle } from "lucide-react"
 import {
   Controller,
   FormProvider,
@@ -78,7 +79,7 @@ const FormItem = React.forwardRef<
 
   return (
     <FormItemContext.Provider value={{ id }}>
-      <div ref={ref} className={cn("space-y-2", className)} {...props} />
+      <div ref={ref} className={cn("relative space-y-2", className)} {...props} />
     </FormItemContext.Provider>
   )
 })
@@ -88,12 +89,12 @@ const FormLabel = React.forwardRef<
   React.ElementRef<typeof LabelPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root>
 >(({ className, ...props }, ref) => {
-  const { error, formItemId } = useFormField()
+  const { formItemId } = useFormField()
 
   return (
     <Label
       ref={ref}
-      className={cn(error && "text-destructive", className)}
+      className={cn(className)}
       htmlFor={formItemId}
       {...props}
     />
@@ -146,19 +147,55 @@ const FormMessage = React.forwardRef<
 >(({ className, children, ...props }, ref) => {
   const { error, formMessageId } = useFormField()
   const body = error ? String(error?.message ?? "") : children
+  const [displayBody, setDisplayBody] = React.useState(body || "")
+  const [animationState, setAnimationState] = React.useState<
+    "hidden" | "enter" | "entered" | "exit"
+  >(body ? "entered" : "hidden")
 
-  if (!body) {
-    return null
-  }
+  React.useEffect(() => {
+    if (body) {
+      setDisplayBody(body)
+      setAnimationState("enter")
+
+      const frameId = window.requestAnimationFrame(() => {
+        setAnimationState("entered")
+      })
+
+      return () => window.cancelAnimationFrame(frameId)
+    }
+
+    if (!displayBody) {
+      return
+    }
+
+    setAnimationState("exit")
+    const timeoutId = window.setTimeout(() => {
+      setDisplayBody("")
+      setAnimationState("hidden")
+    }, 200)
+
+    return () => window.clearTimeout(timeoutId)
+  }, [body, displayBody])
 
   return (
     <p
       ref={ref}
       id={formMessageId}
-      className={cn("text-[0.8rem] font-medium text-destructive", className)}
+      className={cn(
+        "absolute left-0 top-full z-10 mt-1 w-max max-w-full text-[0.8rem] font-medium text-destructive transition-all duration-200 ease-out",
+        animationState === "enter" && "translate-y-1 opacity-0",
+        animationState === "entered" && "translate-y-0 opacity-100",
+        animationState === "exit" && "pointer-events-none opacity-0 -translate-y-1",
+        animationState === "hidden" && "hidden",
+        !displayBody && "hidden",
+        className
+      )}
       {...props}
     >
-      {body}
+      <span className="inline-flex max-w-full items-start gap-1.5 rounded-md border border-red-200/80 bg-red-50/95 px-1.5 py-0.5 shadow-[0_6px_18px_rgba(239,68,68,0.12)]">
+        <AlertCircle className="mt-0.5 h-3.5 w-3.5 shrink-0" />
+        <span>{displayBody}</span>
+      </span>
     </p>
   )
 })

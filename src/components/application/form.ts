@@ -9,11 +9,9 @@ export interface FormDataType {
   currentGrade: string
   gpa: string
   parentName: string
+  parentEmail: string
   parentPhone: string
   fieldsOfInterest: string[]
   researchInterest: string
-  extracurricular: string
-  motivation: string
-  financialAid: string
-  additionalInfo: string
+  promoCode: string
 }

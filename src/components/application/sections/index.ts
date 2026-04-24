@@ -1,0 +1,6 @@
+export { InfoTabSection } from "./info-tab-section"
+export { PersonalTabSection } from "./personal-tab-section"
+export { AcademicTabSection } from "./academic-tab-section"
+export { ParentTabSection } from "./parent-tab-section"
+export { ResearchTabSection } from "./research-tab-section"
+export { AdditionalTabSection } from "./additional-tab-section"

@@ -99,7 +99,7 @@ def transfer_data_to_google_sheets():
     # Let's define the desired order based on the Google Sheet screenshot and your Supabase schema:
     desired_order = [
       'id', 'email', 'firstName', 'lastName', 'city', 'country', 'phone',
-      'ieltsScore', 'satScore', 'schoolName', 'grade', 'gpa', 'parentPhone',
+      'ieltsScore', 'satScore', 'schoolName', 'grade', 'gpa', 'parentEmail', 'parentPhone',
       'fieldsOfInterest', 'researchInterest', 'motivation',
       'financialAid', 'noFinancialAidMoney', 'extracurriculars',
       'parentFirstName', 'parentLastName', 'additionalInfo', 'createdAt'

@@ -69,174 +69,189 @@ export function getPhoneData(phone: string): PhoneData {
   }
 }
 
-export function PhoneInput({
-  value: valueProp,
-  defaultCountry = "US",
-  className,
-  id,
-  required = true,
-  ...rest
-}: PhoneInputProps) {
-  const asYouType = new AsYouType()
+export const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
+  (
+    {
+      value: valueProp,
+      defaultCountry = "US",
+      className,
+      id,
+      required = true,
+      ...rest
+    },
+    ref
+  ) => {
+    const asYouType = new AsYouType()
 
-  const inputRef = React.useRef<HTMLInputElement>(null)
+    const inputRef = React.useRef<HTMLInputElement>(null)
 
-  const [value, handlers, history] = useStateHistory(valueProp)
+    const [value, handlers, history] = useStateHistory(valueProp)
 
-  if (value && value.length > 0) {
-    defaultCountry =
-      parsePhoneNumberFromString(value)?.getPossibleCountries()[0] ||
-      defaultCountry
-  }
-
-  const [openCommand, setOpenCommand] = React.useState(false)
-  const [countryCode, setCountryCode] =
-    React.useState<CountryCode>(defaultCountry)
-
-  const selectedCountry = countries.find(
-    (country) => country.iso2 === countryCode
-  )
-
-  const initializeDefaultValue = () => {
-    if (value) {
-      return value
+    if (value && value.length > 0) {
+      defaultCountry =
+        parsePhoneNumberFromString(value)?.getPossibleCountries()[0] ||
+        defaultCountry
     }
 
-    return `+${selectedCountry?.phone_code}`
-  }
+    const [openCommand, setOpenCommand] = React.useState(false)
+    const [countryCode, setCountryCode] =
+      React.useState<CountryCode>(defaultCountry)
 
-  const handleOnInput = (event: React.FormEvent<HTMLInputElement>) => {
-    asYouType.reset()
+    const selectedCountry = countries.find(
+      (country) => country.iso2 === countryCode
+    )
 
-    let value = event.currentTarget.value
-    if (!value.startsWith("+")) {
-      value = `+${value}`
+    const initializeDefaultValue = () => {
+      if (value) {
+        return value
+      }
+
+      return `+${selectedCountry?.phone_code}`
     }
 
-    const formattedValue = asYouType.input(value)
-    const number = asYouType.getNumber()
-    setCountryCode(number?.country || defaultCountry)
-    event.currentTarget.value = formattedValue
-    handlers.set(formattedValue)
-  }
+    const handleOnInput = (event: React.FormEvent<HTMLInputElement>) => {
+      asYouType.reset()
 
-  const handleOnPaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
-    event.preventDefault()
-    asYouType.reset()
+      let value = event.currentTarget.value
+      if (!value.startsWith("+")) {
+        value = `+${value}`
+      }
 
-    const clipboardData = event.clipboardData
-
-    if (clipboardData) {
-      const pastedData = clipboardData.getData("text/plain")
-      const formattedValue = asYouType.input(pastedData)
+      const formattedValue = asYouType.input(value)
       const number = asYouType.getNumber()
       setCountryCode(number?.country || defaultCountry)
       event.currentTarget.value = formattedValue
       handlers.set(formattedValue)
     }
-  }
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if ((event.metaKey || event.ctrlKey) && event.key === "z") {
-      handlers.back()
-      if (
-        inputRef.current &&
-        history.current > 0 &&
-        history.history[history.current - 1] !== undefined
-      ) {
-        event.preventDefault()
-        inputRef.current.value = history.history[history.current - 1] || ""
+    const handleOnPaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
+      event.preventDefault()
+      asYouType.reset()
+
+      const clipboardData = event.clipboardData
+
+      if (clipboardData) {
+        const pastedData = clipboardData.getData("text/plain")
+        const formattedValue = asYouType.input(pastedData)
+        const number = asYouType.getNumber()
+        setCountryCode(number?.country || defaultCountry)
+        event.currentTarget.value = formattedValue
+        handlers.set(formattedValue)
       }
     }
-  }
 
-  return (
-    <div className={cn("flex gap-2", className)}>
-      <Popover open={openCommand} onOpenChange={setOpenCommand} modal={true}>
-        <PopoverTrigger asChild>
-          <Button
-            variant="outline"
-            role="combobox"
-            aria-expanded={openCommand}
-            className="w-max items-center justify-between whitespace-nowrap"
-          >
-            {selectedCountry?.name ? (
-              <span>{selectedCountry.emoji}</span>
-            ) : (
-              "Choose country"
-            )}
-            <ChevronsUpDown className="ml-2 size-4 shrink-0 opacity-50" />
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent className="p-0 w-max" align="start">
-          <Command>
-            <CommandInput placeholder="Find a country..." />
-            <CommandList>
-              <CommandEmpty>Country is not found.</CommandEmpty>
-              <ScrollArea
-                className={
-                  "[&>[data-radix-scroll-area-viewport]]:max-h-[300px]"
-                }
-              >
-                <CommandGroup heading="Countries">
-                  {countries.map((country) => {
-                    return (
-                      <CommandItem
-                        key={country.iso3}
-                        value={`${country.name} (+${country.phone_code})`}
-                        onSelect={() => {
-                          if (inputRef.current) {
-                            inputRef.current.value = `+${country.phone_code}`
-                            handlers.set(`+${country.phone_code}`)
-                            inputRef.current.focus()
-                          }
-                          setCountryCode(country.iso2 as CountryCode)
-                          setOpenCommand(false)
-                        }}
-                      >
-                        <Check
-                          className={cn(
-                            "mr-2 size-4",
-                            countryCode === country.iso2
-                              ? "opacity-100"
-                              : "opacity-0"
-                          )}
-                        />
-                        <img
-                          src={`/flags/${country.iso2.toLowerCase()}.svg`}
-                          className="relative top-0.5 mr-2 w-4 h-3 object-cover"
-                          aria-labelledby={country.name}
-                          title={country.name}
-                          alt={country.name}
-                        />
-                        <span>{country.name}</span>
-                        <span className="text-gray-11 ml-1">
-                          (+{country.phone_code})
-                        </span>
-                      </CommandItem>
-                    )
-                  })}
-                </CommandGroup>
-              </ScrollArea>
-            </CommandList>
-          </Command>
-        </PopoverContent>
-      </Popover>
-      <Input
-        ref={inputRef}
-        type="text"
-        pattern="^(\+)?[0-9\s]*$"
-        name="phone"
-        id={id}
-        placeholder="Phone number"
-        defaultValue={initializeDefaultValue()}
-        onInput={handleOnInput}
-        onPaste={handleOnPaste}
-        onKeyDown={handleKeyDown}
-        required={required}
-        aria-required={required}
-        {...rest}
-      />
-    </div>
-  )
-}
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+      if ((event.metaKey || event.ctrlKey) && event.key === "z") {
+        handlers.back()
+        if (
+          inputRef.current &&
+          history.current > 0 &&
+          history.history[history.current - 1] !== undefined
+        ) {
+          event.preventDefault()
+          inputRef.current.value = history.history[history.current - 1] || ""
+        }
+      }
+    }
+
+    return (
+      <div className={cn("flex gap-2", className)}>
+        <Popover open={openCommand} onOpenChange={setOpenCommand} modal={true}>
+          <PopoverTrigger asChild>
+            <Button
+              type="button"
+              variant="outline"
+              role="combobox"
+              aria-expanded={openCommand}
+              className="w-max items-center justify-between whitespace-nowrap"
+            >
+              {selectedCountry?.name ? (
+                <span>{selectedCountry.emoji}</span>
+              ) : (
+                "Choose country"
+              )}
+              <ChevronsUpDown className="ml-2 size-4 shrink-0 opacity-50" />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="p-0 w-max" align="start">
+            <Command>
+              <CommandInput placeholder="Find a country..." />
+              <CommandList>
+                <CommandEmpty>Country is not found.</CommandEmpty>
+                <ScrollArea
+                  className={
+                    "[&>[data-radix-scroll-area-viewport]]:max-h-[300px]"
+                  }
+                >
+                  <CommandGroup heading="Countries">
+                    {countries.map((country) => {
+                      return (
+                        <CommandItem
+                          key={country.iso3}
+                          value={`${country.name} (+${country.phone_code})`}
+                          onSelect={() => {
+                            if (inputRef.current) {
+                              inputRef.current.value = `+${country.phone_code}`
+                              handlers.set(`+${country.phone_code}`)
+                              inputRef.current.focus()
+                            }
+                            setCountryCode(country.iso2 as CountryCode)
+                            setOpenCommand(false)
+                          }}
+                        >
+                          <Check
+                            className={cn(
+                              "mr-2 size-4",
+                              countryCode === country.iso2
+                                ? "opacity-100"
+                                : "opacity-0"
+                            )}
+                          />
+                          <img
+                            src={`/flags/${country.iso2.toLowerCase()}.svg`}
+                            className="relative top-0.5 mr-2 w-4 h-3 object-cover"
+                            aria-labelledby={country.name}
+                            title={country.name}
+                            alt={country.name}
+                          />
+                          <span>{country.name}</span>
+                          <span className="text-gray-11 ml-1">
+                            (+{country.phone_code})
+                          </span>
+                        </CommandItem>
+                      )
+                    })}
+                  </CommandGroup>
+                </ScrollArea>
+              </CommandList>
+            </Command>
+          </PopoverContent>
+        </Popover>
+        <Input
+          ref={(node) => {
+            inputRef.current = node
+            if (typeof ref === "function") {
+              ref(node)
+            } else if (ref) {
+              ref.current = node
+            }
+          }}
+          type="text"
+          pattern="^(\\+)?[0-9\\s]*$"
+          name="phone"
+          id={id}
+          placeholder="Phone number"
+          defaultValue={initializeDefaultValue()}
+          onInput={handleOnInput}
+          onPaste={handleOnPaste}
+          onKeyDown={handleKeyDown}
+          required={required}
+          aria-required={required}
+          {...rest}
+        />
+      </div>
+    )
+  }
+)
+
+PhoneInput.displayName = "PhoneInput"
