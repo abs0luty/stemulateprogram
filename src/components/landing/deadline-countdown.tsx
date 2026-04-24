@@ -8,12 +8,12 @@ interface TimeUnitProps {
 
 const TimeUnit: FC<TimeUnitProps> = (props: TimeUnitProps) => {
   return (
-    <div className="relative flex min-w-[3.3rem] items-center justify-center rounded-lg border border-white/10 bg-black/40 px-3 py-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_0_20px_rgba(255,255,255,0.04)] backdrop-blur-sm sm:min-w-[3.8rem] sm:px-4 sm:py-3">
+    <div className="relative flex min-w-[2.85rem] items-center justify-center rounded-lg border border-white/10 bg-black/40 px-2 py-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_0_20px_rgba(255,255,255,0.04)] backdrop-blur-sm sm:min-w-[3.3rem] sm:px-3 sm:py-2.5 lg:min-w-[3.8rem] lg:px-4 lg:py-3">
       <div className="pointer-events-none absolute inset-[3px] rounded-md border border-white/5" />
-      <span className="invisible text-2xl font-bold tracking-[0.12em] sm:text-3xl">
+      <span className="invisible text-xl font-bold tracking-[0.08em] sm:text-2xl lg:text-3xl">
         88
       </span>
-      <span className="absolute inset-0 flex items-center justify-center pl-[0.12em] text-center font-bold tracking-[0.12em] text-[#f5f7fb] drop-shadow-[0_0_10px_rgba(255,255,255,0.18)] sm:text-3xl text-2xl">
+      <span className="absolute inset-0 flex items-center justify-center pl-[0.08em] text-center text-xl font-bold tracking-[0.08em] text-[#f5f7fb] drop-shadow-[0_0_10px_rgba(255,255,255,0.18)] sm:text-2xl lg:text-3xl">
         {props.value < 10 ? `0${props.value}` : props.value}
       </span>
     </div>
@@ -23,7 +23,7 @@ const TimeUnit: FC<TimeUnitProps> = (props: TimeUnitProps) => {
 const TimeLabel: FC<{ label: string }> = ({ label }) => {
   return (
     <span
-      className={`mt-2 text-center text-[11px] font-medium uppercase tracking-[0.2em] text-white/65 sm:text-xs ${
+      className={`mt-2 text-center text-[10px] font-medium uppercase tracking-[0.16em] text-white/65 sm:text-[11px] lg:text-xs ${
         label === "Days"
           ? "translate-x-[5px]"
           : label === "Seconds"
@@ -38,7 +38,7 @@ const TimeLabel: FC<{ label: string }> = ({ label }) => {
 
 const TimeSeparator: FC = () => {
   return (
-    <div className="flex h-[3.1rem] items-center justify-center px-1 text-xl leading-none text-white/70 sm:h-[3.5rem] sm:px-1.5 sm:text-2xl">
+    <div className="flex h-[2.9rem] items-center justify-center px-0.5 text-lg leading-none text-white/70 sm:h-[3.1rem] sm:px-1 sm:text-xl lg:h-[3.5rem] lg:px-1.5 lg:text-2xl">
       <span className="relative -mt-[0.08em] font-bold leading-none text-[#f5f7fb]">
         :
       </span>
@@ -58,21 +58,21 @@ const TimeCountdown: FC<{ timeLeft: TimeLeft }> = ({ timeLeft }) => {
 
   return (
     <div className="mb-6 flex flex-col items-center">
-      <div className="rounded-2xl bg-black/20 px-3 py-2 sm:px-4">
-        <div className="flex items-center justify-center gap-2 sm:gap-4">
+      <div className="rounded-2xl bg-black/20 px-2 py-2 sm:px-3 lg:px-4">
+        <div className="flex items-center justify-center gap-1.5 sm:gap-2 lg:gap-4">
           {units.map((unit, index) => (
-            <div key={unit.label} className="flex items-center gap-2 sm:gap-4">
+            <div key={unit.label} className="flex items-center gap-1.5 sm:gap-2 lg:gap-4">
               <TimeUnit value={unit.value} />
               {index < units.length - 1 ? <TimeSeparator /> : null}
             </div>
           ))}
         </div>
       </div>
-      <div className="mt-1 flex items-start justify-center gap-5 sm:gap-10">
+      <div className="mt-1 flex items-start justify-center gap-3 sm:gap-5 lg:gap-10">
         {units.map((unit) => (
           <div
             key={unit.label}
-            className="flex w-[4.5rem] flex-col items-center sm:w-[5.75rem]"
+            className="flex w-[3.5rem] flex-col items-center sm:w-[4.5rem] lg:w-[5.75rem]"
           >
             <TimeLabel label={unit.label} />
           </div>
@@ -137,21 +137,21 @@ export const DeadlineCountdown: FC<DeadlineCountdownProps> = (
         {timeLeft.days == 0 && timeLeft.hours == 0 && timeLeft.minutes == 0 ? (
           <div className="flex flex-col items-center space-y-4 p-6 text-center">
             <CheckCircle className="h-9 w-9 text-red-600 mb-2" />
-            <h3 className="md:text-2xl text-xl font-bold text-red-600 font-serif">
+            <h3 className="text-lg font-bold text-red-600 font-serif sm:text-xl md:text-2xl">
               {props.deadlinePassedHeader}
             </h3>
             <p className="text-gray-200 text-sm">{props.deadlinePassedBrief}</p>
           </div>
         ) : (
           <>
-            <h3 className="text-xl md:text-2xl font-bold text-center mb-6 text-white font-serif">
+            <h3 className="mb-6 text-lg font-bold text-center text-white font-serif sm:text-xl md:text-2xl">
               {props.aboutDeadline}
             </h3>
             <TimeCountdown timeLeft={timeLeft} />
-            <div className="px-6 pt-4">
-              <div className="mx-auto flex max-w-xl items-start gap-4 text-left">
-                <Clock className="mt-1 h-5 w-5 flex-shrink-0 text-gray-300" />
-                <div>
+            <div className="px-4 pt-4 sm:px-6">
+              <div className="mx-auto flex max-w-xl flex-col items-center gap-3 text-center md:flex-row md:items-start md:gap-4 md:text-left">
+                <Clock className="h-5 w-5 flex-shrink-0 text-gray-300 md:mt-1" />
+                <div className="max-w-md">
                   <p className="text-sm font-semibold text-white sm:text-base">
                     {props.targetDateString}
                   </p>

@@ -44,7 +44,7 @@ export const OtpInputForm: FC<OtpInputFormProps> = ({
           </p>
           <p className="text-muted-foreground">
             This may take a while for our system to send an email with
-            verification code, check "Spam folder".
+            verification code.
           </p>
         </div>
 

@@ -57,25 +57,29 @@ export const HeroSection: FC = () => {
       <div className="mx-auto mt-10 mb-8 w-full md:max-w-4xl lg:max-w-5xl">
         <WorldMapSimple highlightedCountries={highlightedCountries} />
       </div>
-      <div className="flex flex-col md:flex-row justify-center items-center gap-10 md:gap-36 lg:gap-48 xl:gap-60">
-        <DeadlineCountdown
-          aboutDeadline="Priority Application Deadline"
-          targetDateString="May 20, 2026 at 11:59 PM (UTC-5)"
-          targetDate={new Date(Date.UTC(2026, 4, 21, 4, 59, 0))}
-          deadlineDescription="Applications submitted by this date will be given priority review."
-          deadlinePassedHeader="Priority Application Deadline Passed"
-          deadlinePassedBrief="The priority deadline for submitting applications was May 20th at 11:59
-          PM. Please contact the program coordinator for any inquiries."
-        />
-        <DeadlineCountdown
-          aboutDeadline="Final Application Deadline"
-          targetDateString="May 31, 2026 at 11:59 PM (UTC-5)"
-          targetDate={new Date(Date.UTC(2026, 5, 1, 4, 59, 0))}
-          deadlineDescription="Applications submitted by this date will be considered for review."
-          deadlinePassedHeader="Final Application Deadline Passed"
-          deadlinePassedBrief="The final deadline for submitting applications was May 31st at 11:59
-          PM. Please contact the program coordinator for any inquiries."
-        />
+      <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-center gap-10 md:flex-row md:items-start md:gap-8 lg:gap-12">
+        <div className="w-full md:flex-1">
+          <DeadlineCountdown
+            aboutDeadline="Priority Application Deadline"
+            targetDateString="May 20, 2026 at 11:59 PM (UTC-5)"
+            targetDate={new Date(Date.UTC(2026, 4, 21, 4, 59, 0))}
+            deadlineDescription="Applications submitted by this date will be given priority review."
+            deadlinePassedHeader="Priority Application Deadline Passed"
+            deadlinePassedBrief="The priority deadline for submitting applications was May 20th at 11:59
+            PM. Please contact the program coordinator for any inquiries."
+          />
+        </div>
+        <div className="w-full md:flex-1">
+          <DeadlineCountdown
+            aboutDeadline="Final Application Deadline"
+            targetDateString="May 31, 2026 at 11:59 PM (UTC-5)"
+            targetDate={new Date(Date.UTC(2026, 5, 1, 4, 59, 0))}
+            deadlineDescription="Applications submitted by this date will be considered for review."
+            deadlinePassedHeader="Final Application Deadline Passed"
+            deadlinePassedBrief="The final deadline for submitting applications was May 31st at 11:59
+            PM. Please contact the program coordinator for any inquiries."
+          />
+        </div>
       </div>
     </section>
   )

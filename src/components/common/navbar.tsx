@@ -20,14 +20,14 @@ export const Navbar: React.FC = () => {
   const [isMobileNavMenuOpen, setIsMobileNavMenuOpen] = useState<boolean>(false)
 
   return (
-    <header className="relative w-full bg-neutral-900 backdrop-blur-md text-white py-4 px-8 flex justify-between items-center z-50">
+    <header className="relative z-50 flex w-full items-center justify-between bg-neutral-900 px-5 py-4 text-white backdrop-blur-md md:px-6 lg:px-8">
       <div className="text-xl font-bold">
         <Link to="/">
           <img className="p-2" src="logo.svg" alt="logo" />
         </Link>
       </div>
 
-      <nav className="text-xl underline-offset-4 hidden md:flex space-x-6">
+      <nav className="hidden flex-wrap items-center justify-end gap-x-4 gap-y-2 text-base underline-offset-4 md:flex lg:gap-x-6 lg:text-xl">
         {[
           {
             label: "Home",
