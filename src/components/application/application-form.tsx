@@ -56,9 +56,18 @@ export const ApplicationForm = () => {
   const [showConfirmationDialog, setShowConfirmationDialog] = useState(false)
   const [showValidationDialog, setShowValidationDialog] = useState(false)
   const [showLogoutDialog, setShowLogoutDialog] = useState(false)
+  const [promoCodeStatus, setPromoCodeStatus] = useState<
+    "idle" | "checking" | "valid" | "invalid" | "error"
+  >("idle")
+  const [isCheckingPromoCode, setIsCheckingPromoCode] = useState(false)
 
   const tabsRef = useRef<HTMLDivElement>(null)
   const currentUserIdRef = useRef<string | null>(null)
+  const promoCodeCheckIdRef = useRef(0)
+  const skipPromoCodeResetRef = useRef(false)
+
+  const normalizePromoCode = (value?: string | null) =>
+    value?.trim().toUpperCase() ?? ""
 
   const handleLogout = async () => {
     localStorage.removeItem("supabase.auth.token")
@@ -192,6 +201,22 @@ export const ApplicationForm = () => {
     return () => subscription.unsubscribe()
   }, [form])
 
+  useEffect(() => {
+    const subscription = form.watch((_, { name }) => {
+      if (name === "promoCode") {
+        if (skipPromoCodeResetRef.current) {
+          skipPromoCodeResetRef.current = false
+          return
+        }
+
+        setPromoCodeStatus("idle")
+        form.clearErrors("promoCode")
+      }
+    })
+
+    return () => subscription.unsubscribe()
+  }, [form])
+
   const errors = form.formState.errors
 
   const hasErrorsInTab = (tab: ApplicationTab): boolean => {
@@ -230,13 +255,103 @@ export const ApplicationForm = () => {
     }
   }
 
+  const verifyPromoCode = async (
+    rawPromoCode?: string,
+    options?: { silent?: boolean }
+  ) => {
+    const normalizedPromoCode = normalizePromoCode(
+      rawPromoCode ?? form.getValues("promoCode")
+    )
+
+    if (!normalizedPromoCode) {
+      setPromoCodeStatus("idle")
+      form.clearErrors("promoCode")
+      return true
+    }
+
+    const checkId = promoCodeCheckIdRef.current + 1
+    promoCodeCheckIdRef.current = checkId
+    setIsCheckingPromoCode(true)
+    setPromoCodeStatus("checking")
+
+    try {
+      const { data, error } = await supabaseClient.rpc("check_promo_code", {
+        candidate: normalizedPromoCode,
+      })
+
+      if (checkId !== promoCodeCheckIdRef.current) {
+        return false
+      }
+
+      if (error) {
+        throw error
+      }
+
+      if (!data) {
+        setPromoCodeStatus("invalid")
+        form.setError("promoCode", {
+          type: "manual",
+          message: "Promo code is invalid or expired",
+        })
+        return false
+      }
+
+      form.clearErrors("promoCode")
+      skipPromoCodeResetRef.current = true
+      form.setValue("promoCode", normalizedPromoCode, {
+        shouldDirty: true,
+        shouldTouch: true,
+      })
+      setPromoCodeStatus("valid")
+      return true
+    } catch (error) {
+      console.error("Error verifying promo code:", error)
+
+      if (checkId !== promoCodeCheckIdRef.current) {
+        return false
+      }
+
+      setPromoCodeStatus("error")
+
+      if (!options?.silent) {
+        toast({
+          title: "Promo Code Check Failed",
+          description:
+            "We could not verify your promo code right now. Please try again.",
+        })
+      }
+
+      return false
+    } finally {
+      if (checkId === promoCodeCheckIdRef.current) {
+        setIsCheckingPromoCode(false)
+      }
+    }
+  }
+
   const onSubmit = async (values: ApplicationFormValues) => {
     setIsSubmitting(true)
 
     try {
+      const normalizedPromoCode = normalizePromoCode(values.promoCode)
+      const isPromoCodeValid = await verifyPromoCode(normalizedPromoCode, {
+        silent: true,
+      })
+
+      if (!isPromoCodeValid) {
+        setActiveTab("additional")
+        setIsSubmitting(false)
+        return
+      }
+
       const { error: insertError } = await supabaseClient
         .from("applications")
-        .insert([values])
+        .insert([
+          {
+            ...values,
+            promoCode: normalizedPromoCode || null,
+          },
+        ])
 
       if (insertError) {
         toast({
@@ -418,6 +533,9 @@ export const ApplicationForm = () => {
                           onPrevious={() => setActiveTab("research")}
                           onSubmitAttempt={handleSubmitAttempt}
                           isSubmitting={isSubmitting}
+                          onVerifyPromoCode={() => verifyPromoCode()}
+                          isCheckingPromoCode={isCheckingPromoCode}
+                          promoCodeStatus={promoCodeStatus}
                         />
                       </>
                     ) : null}
