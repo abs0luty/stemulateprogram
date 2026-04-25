@@ -1,5 +1,5 @@
 import { ApplicationForm } from "@/components/application/application-form"
-import { LogOut } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 import { FC } from "react"
 import { Link, useNavigate } from "react-router-dom"
 
@@ -28,7 +28,7 @@ const ApplicationFormPageContent: FC = () => {
             className="inline-flex items-center gap-2 border-b border-transparent pb-0.5 text-base font-medium text-neutral-950 transition hover:border-current hover:text-neutral-950"
           >
             Return
-            <LogOut aria-hidden="true" className="h-4 w-4 shrink-0" />
+            <ArrowRight aria-hidden="true" className="h-4 w-4 shrink-0" />
           </Link>
         </div>
         <div className="space-y-8">

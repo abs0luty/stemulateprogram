@@ -29,7 +29,7 @@ export const EmailInputForm: FC<EmailInputFormProps> = ({
   isSignUp,
 }) => (
   <>
-    <div className="flex flex-col gap-5 md:flex-row md:items-center md:gap-8">
+    <div className="flex flex-col gap-5 pt-6 md:flex-row md:items-center md:gap-8 md:pt-0">
       <div className="mx-auto flex h-[180px] w-full max-w-[220px] shrink-0 items-center justify-center overflow-hidden md:mx-0">
         <img
           src="/login.svg"

@@ -49,6 +49,10 @@
         overscroll-behavior: none;
       }
 
+      #root {
+        min-height: 100%;
+      }
+
       @font-face {
         font-family: "Sohne";
         font-weight: 400;
@@ -65,6 +69,10 @@
     </style>
   </head>
   <body>
+    <script>
+      document.documentElement.dataset.initialLoaderTheme =
+        window.location.pathname.startsWith("/apply") ? "light" : "dark"
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
     <script src="/scripts/three.min.js"></script>
@@ -97,12 +105,19 @@
 
         function removeLoadingDiv() {
           var loadingDiv = document.getElementById("loadingDiv")
+          var loadingShell = document.getElementById("loadingShell")
 
           if (!loadingDiv) {
             return
           }
 
-          loadingDiv.style.transition = "opacity 0.5s ease-in-out"
+          if (loadingShell) {
+            loadingShell.style.transition = "opacity 0.46s ease-out, transform 0.46s ease-out"
+            loadingShell.style.opacity = 0
+            loadingShell.style.transform = "scale(0.99)"
+          }
+
+          loadingDiv.style.transition = "opacity 0.28s ease-out 0.46s"
           loadingDiv.style.opacity = 0
           loadingDiv.style.pointerEvents = "none"
 
@@ -110,7 +125,7 @@
             if (loadingDiv.parentNode) {
               loadingDiv.parentNode.removeChild(loadingDiv)
             }
-          }, 500)
+          }, 740)
         }
 
         function finishLoading() {
@@ -140,7 +155,6 @@
     </script>
     <div
       id="loadingDiv"
-      class="bg-neutral-900"
       style="
         position: fixed;
         top: 0;
@@ -151,11 +165,12 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        color: white;
+        background: rgb(18 18 18);
+        color: rgb(245 245 245);
         font-size: 2em;
       "
     >
-      <div class="loading-shell">
+      <div id="loadingShell" class="loading-shell">
         <div id="loadingProgressLabel" class="loading-progress-counter">0%</div>
       </div>
     </div>
@@ -176,9 +191,19 @@
         font-weight: 600;
         letter-spacing: 0.08em;
         line-height: 1;
-        color: rgba(255, 255, 255, 0.86);
+        color: rgba(255, 255, 255, 0.9);
         font-variant-numeric: tabular-nums;
-        text-shadow: 0 0 24px rgba(248, 113, 113, 0.18);
+        text-shadow: 0 0 18px rgba(255, 255, 255, 0.08);
+      }
+
+      html[data-initial-loader-theme="light"] #loadingDiv {
+        background: rgb(252 252 252) !important;
+        color: #171717 !important;
+      }
+
+      html[data-initial-loader-theme="light"] #loadingProgressLabel {
+        color: rgba(23, 23, 23, 0.88) !important;
+        text-shadow: 0 0 16px rgba(23, 23, 23, 0.08) !important;
       }
     </style>
   </body>

@@ -130,15 +130,34 @@
   align-items: center;
   justify-content: center;
   padding: 1rem;
-  color: white;
-  background: rgb(23 23 23);
   pointer-events: none;
-  transition: opacity 0.5s ease-in-out;
+  opacity: 1;
+  transition: opacity 0.28s ease-out 0.46s;
+}
+
+.site-loader-overlay-exit {
+  opacity: 0;
+}
+
+.site-loader-overlay-dark {
+  color: rgb(245 245 245);
+  background: rgb(18 18 18 / 0.995);
 }
 
 .site-loader-overlay-light {
   color: rgb(23 23 23);
-  background: rgb(255 255 255);
+  background: rgb(252 252 252 / 0.995);
+}
+
+.loading-shell-transition {
+  transition:
+    opacity 0.46s ease-out,
+    transform 0.46s ease-out;
+}
+
+.loading-shell-transition-exit {
+  opacity: 0;
+  transform: scale(0.99);
 }
 
 .loading-shell {
@@ -156,18 +175,17 @@
   font-weight: 600;
   letter-spacing: 0.08em;
   line-height: 1;
-  color: rgba(255, 255, 255, 0.86);
+  color: rgba(255, 255, 255, 0.9);
   font-variant-numeric: tabular-nums;
-  text-shadow: 0 0 24px rgba(248, 113, 113, 0.18);
+  text-shadow: 0 0 18px rgba(255, 255, 255, 0.08);
 }
 
 .loading-progress-counter-light {
-  color: rgba(23, 23, 23, 0.92);
-  text-shadow: none;
+  color: rgba(23, 23, 23, 0.88);
+  text-shadow: 0 0 16px rgba(23, 23, 23, 0.08);
 }
 
-.site-loader-overlay-light .loading-progress-counter,
-.site-loader-overlay-light .loading-progress-counter-light {
-  color: rgba(23, 23, 23, 0.92);
-  text-shadow: none;
+.site-loader-overlay-light .loading-progress-counter {
+  color: rgba(23, 23, 23, 0.88);
+  text-shadow: 0 0 16px rgba(23, 23, 23, 0.08);
 }

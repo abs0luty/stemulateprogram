@@ -95,7 +95,7 @@ export const WhyResearchSection: FC = () => (
           <article
             className="relative flex h-full flex-col overflow-hidden rounded-[28px]
                        border border-white/15 bg-white/10 px-6 pb-5 pt-6
-                       shadow-[0_24px_80px_rgba(0,0,0,0.28)] backdrop-blur-sm
+                       shadow-[0_24px_80px_rgba(0,0,0,0.28)] backdrop-blur-xl
                        transition duration-300 hover:bg-white/14 sm:px-7 sm:pb-6 sm:pt-7
                        lg:px-6 lg:pb-5 lg:pt-6"
             key={`research-reason-${index}`}

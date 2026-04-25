@@ -6,14 +6,14 @@ interface SiteLoaderProps {
   className?: string
   compact?: boolean
   onComplete?: () => void
-  theme?: "dark" | "light"
+  theme?: "light" | "dark"
 }
 
 interface SiteLoaderOverlayProps {
   active: boolean
   className?: string
   minVisibleMs?: number
-  theme?: "dark" | "light"
+  theme?: "light" | "dark"
 }
 
 export const SiteLoader = ({
@@ -170,7 +170,7 @@ export const SiteLoaderOverlay = ({
     setIsVisible(false)
     unmountTimerRef.current = window.setTimeout(() => {
       setIsMounted(false)
-    }, 500)
+    }, 740)
   }, [active, isMounted, loaderCompleted, minDelayPassed])
 
   if (!isMounted) {
@@ -182,16 +182,23 @@ export const SiteLoaderOverlay = ({
       aria-hidden={!active}
       className={cn(
         "site-loader-overlay",
-        theme === "light" && "site-loader-overlay-light",
-        isVisible ? "opacity-100" : "opacity-0 pointer-events-none",
+        theme === "light" ? "site-loader-overlay-light" : "site-loader-overlay-dark",
+        isVisible ? "opacity-100" : "site-loader-overlay-exit pointer-events-none",
         className
       )}
     >
-      <SiteLoader
-        active={active}
-        onComplete={() => setLoaderCompleted(true)}
-        theme={theme}
-      />
+      <div
+        className={cn(
+          "loading-shell-transition",
+          !isVisible && "loading-shell-transition-exit"
+        )}
+      >
+        <SiteLoader
+          active={active}
+          onComplete={() => setLoaderCompleted(true)}
+          theme={theme}
+        />
+      </div>
     </div>
   )
 }

@@ -6,11 +6,19 @@ export const ROUTE_TRANSITION_START_EVENT = "app:route-transition-start"
 const isModifiedEvent = (event: MouseEvent<HTMLAnchorElement>) =>
   !!(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey)
 
-const getTargetPath = (to: To) =>
-  typeof to === "string" ? to : createPath(to)
+const getTargetPath = (to: To) => {
+  const rawPath = typeof to === "string" ? to : createPath(to)
+  const resolvedUrl = new URL(rawPath, window.location.href)
 
-export const startRouteTransition = () => {
-  window.dispatchEvent(new Event(ROUTE_TRANSITION_START_EVENT))
+  return `${resolvedUrl.pathname}${resolvedUrl.search}${resolvedUrl.hash}`
+}
+
+export const startRouteTransition = (to?: string) => {
+  window.dispatchEvent(
+    new CustomEvent(ROUTE_TRANSITION_START_EVENT, {
+      detail: { to },
+    })
+  )
 }
 
 export const TransitionLink = ({
@@ -30,7 +38,7 @@ export const TransitionLink = ({
       return
     }
 
-    startRouteTransition()
+    startRouteTransition(nextPath)
   }
 
   const handlePointerDown = (event: PointerEvent<HTMLAnchorElement>) => {

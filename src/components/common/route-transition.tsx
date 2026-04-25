@@ -6,10 +6,13 @@ import { ROUTE_TRANSITION_START_EVENT } from "./transition-link"
 export const RouteTransition = () => {
   const location = useLocation()
   const previousPathRef = useRef<string | null>(null)
+  const pendingPathRef = useRef<string | null>(null)
   const [isTransitioning, setIsTransitioning] = useState(false)
   const failSafeTimerRef = useRef<number | null>(null)
   const finishTimerRef = useRef<number | null>(null)
-  const isPortalRoute = location.pathname === "/apply"
+  const currentPath = `${location.pathname}${location.search}`
+  const transitionTargetPath = pendingPathRef.current ?? currentPath
+  const isPortalRoute = transitionTargetPath.startsWith("/apply")
 
   const clearTimers = () => {
     if (failSafeTimerRef.current) {
@@ -35,7 +38,9 @@ export const RouteTransition = () => {
   }
 
   useEffect(() => {
-    const handleTransitionStart = () => {
+    const handleTransitionStart = (event: Event) => {
+      const transitionEvent = event as CustomEvent<{ to?: string }>
+      pendingPathRef.current = transitionEvent.detail?.to ?? null
       startTransition()
     }
 
@@ -69,6 +74,7 @@ export const RouteTransition = () => {
     }
 
     previousPathRef.current = nextPath
+    pendingPathRef.current = null
     clearTimers()
     finishTimerRef.current = window.setTimeout(() => {
       setIsTransitioning(false)

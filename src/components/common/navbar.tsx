@@ -7,7 +7,7 @@ interface NavbarItem {
 }
 
 const navItems: NavbarItem[] = [
-  { label: "Application Portal", href: "/apply" },
+  { label: "Apply", href: "/apply" },
   { label: "About Us", href: "/about-us" },
   { label: "Programs", href: "/programs" },
   // {
