@@ -60,24 +60,24 @@ export const Footer: FC<FooterProps> = ({ withTopFade = false }) => (
       />
     ) : null}
     <div className="relative container mx-auto">
-      <div className="flex flex-col md:flex-row items-center justify-between px-8 pb-8 pt-10 md:pt-12">
-        <div className="mb-6 md:mb-0">
+      <div className="flex flex-col items-center gap-8 px-6 pb-8 pt-10 text-center sm:px-8 lg:flex-row lg:items-start lg:justify-between lg:gap-10 lg:pt-12 lg:text-left">
+        <div className="flex w-full justify-center lg:-ml-4 lg:mb-0 lg:w-auto lg:flex-shrink-0 lg:justify-start">
           <TransitionLink to="/">
-            <img className="p-2" src="logo.svg" alt="logo" />
+            <img className="max-w-full p-2" src="logo.svg" alt="logo" />
           </TransitionLink>
         </div>
-        <div className="grid grid-cols-2 gap-x-16 gap-y-4 mb-6 md:mb-0">
+        <div className="grid w-full max-w-xl grid-cols-1 justify-items-center gap-x-2 gap-y-4 sm:grid-cols-2 lg:mb-0 lg:max-w-[24rem] lg:flex-1 lg:justify-items-start">
           {companyLinks.map(({ name, href }) => (
             <TransitionLink
               key={name}
               to={href}
-              className="hover:text-neutral-300 transition text-base md:text-lg"
+              className="text-base transition hover:text-neutral-300 sm:text-lg"
             >
               {name}
             </TransitionLink>
           ))}
         </div>
-        <div className="flex items-center space-x-6 mb-6 md:mb-0">
+        <div className="flex flex-wrap items-center justify-center gap-4 lg:mb-0 lg:w-auto lg:justify-end">
           {links.map(({ href, icon }) => (
             <a
               key={href}

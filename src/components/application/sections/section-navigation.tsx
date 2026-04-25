@@ -12,12 +12,12 @@ const PreviousButton = ({
 }) => (
   <button
     type="button"
-    className="inline-flex items-center gap-2 text-sm font-medium text-neutral-500 underline-offset-4 transition hover:text-neutral-950 hover:underline disabled:pointer-events-none disabled:opacity-40"
+    className="inline-flex items-center gap-2 text-sm font-medium leading-none text-neutral-500 underline-offset-4 transition hover:text-neutral-950 hover:underline disabled:pointer-events-none disabled:opacity-40"
     onClick={onClick}
     disabled={disabled}
   >
     <ArrowLeft className="h-4 w-4 shrink-0" />
-    <span>{label}</span>
+    <span className="leading-none">{label}</span>
   </button>
 )
 
@@ -32,11 +32,11 @@ const NextButton = ({
 }) => (
   <button
     type="button"
-    className="inline-flex items-center gap-2 text-sm font-medium text-neutral-500 underline-offset-4 transition hover:text-neutral-950 hover:underline disabled:pointer-events-none disabled:opacity-40"
+    className="inline-flex items-center gap-2 text-sm font-medium leading-none text-neutral-500 underline-offset-4 transition hover:text-neutral-950 hover:underline disabled:pointer-events-none disabled:opacity-40"
     onClick={onClick}
     disabled={disabled}
   >
-    <span>{label}</span>
+    <span className="leading-none">{label}</span>
     <ArrowRight className="h-4 w-4 shrink-0" />
   </button>
 )
@@ -48,8 +48,8 @@ export const SectionNavigation = ({
   onNext,
   disabled,
 }: NavigationProps & { disabled?: boolean }) => (
-  <div className="mt-20 flex flex-col gap-3 sm:flex-row sm:justify-between">
-    <div>
+  <div className="mt-20 flex items-center justify-between gap-3 max-[360px]:flex-col max-[360px]:items-start">
+    <div className="flex items-center">
       {previousLabel && onPrevious ? (
         <PreviousButton
           label={previousLabel}
@@ -58,7 +58,7 @@ export const SectionNavigation = ({
         />
       ) : null}
     </div>
-    <div>
+    <div className="flex items-center">
       {nextLabel && onNext ? (
         <NextButton label={nextLabel} onClick={onNext} disabled={disabled} />
       ) : null}
