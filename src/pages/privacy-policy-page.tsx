@@ -1,17 +1,17 @@
 import { FC } from "react"
 import { StandartLayout } from "@/layout/standard-layout"
-import { Link } from "react-router-dom"
+import { TransitionLink } from "@/components/common/transition-link"
 
 const PrivacyPolicyPageContent: FC = () => {
   return (
-    <main className="min-h-screen bg-white text-black py-24 px-4 md:px-8 flex flex-col items-center">
-      <div className="max-w-5xl mx-auto space-y-8 w-full">
+    <main className="min-h-screen bg-neutral-900 px-4 py-24 text-neutral-100 md:px-8">
+      <div className="mx-auto w-full max-w-5xl space-y-8">
         {/* Title */}
-        <p className="font-bold text-3xl md:text-4xl font-serif">
+        <p className="font-bold text-2xl md:text-4xl font-serif">
           Privacy Policy for STEMulate Research Program
         </p>
         {/* Effective Date */}
-        <p className="text-xl sm:text-2xl">
+        <p className="text-lg sm:text-xl md:text-2xl">
           <b>Effective Date: June 25, 2025.</b>
         </p>
         {/* Introduction Paragraph 1 */}
@@ -27,10 +27,10 @@ const PrivacyPolicyPageContent: FC = () => {
           STEMulate Research Program, you agree to the collection and use of
           your information in accordance with this policy.
         </p>
-        <hr className="border-t border-gray-300" />
+        <hr className="border-t border-neutral-700" />
 
         {/* 1. Information We Collect */}
-        <p className="font-bold text-2xl md:text-3xl font-serif">
+        <p className="font-bold text-xl md:text-3xl font-serif">
           1. Information We Collect
         </p>
         <p className="text-lg md:text-xl">
@@ -39,7 +39,7 @@ const PrivacyPolicyPageContent: FC = () => {
         </p>
 
         {/* 1.1. Information You Provide Directly */}
-        <p className="font-bold text-xl md:text-2xl font-serif">
+        <p className="font-bold text-lg md:text-2xl font-serif">
           1.1. Information You Provide Directly
         </p>
         <ul className="list-disc pl-6 text-lg md:text-xl space-y-2">
@@ -72,7 +72,7 @@ const PrivacyPolicyPageContent: FC = () => {
         </ul>
 
         {/* 1.2. Research-Specific Information (for Program Participants) */}
-        <p className="font-bold text-xl md:text-2xl font-serif">
+        <p className="font-bold text-lg md:text-2xl font-serif">
           1.2. Research-Specific Information (for Program Participants)
         </p>
         <ul className="list-disc pl-6 text-lg md:text-xl space-y-2">
@@ -90,7 +90,7 @@ const PrivacyPolicyPageContent: FC = () => {
         </ul>
 
         {/* 1.3. Information Collected Automatically */}
-        <p className="font-bold text-xl md:text-2xl font-serif">
+        <p className="font-bold text-lg md:text-2xl font-serif">
           1.3. Information Collected Automatically
         </p>
         <p className="text-lg md:text-xl">
@@ -106,7 +106,7 @@ const PrivacyPolicyPageContent: FC = () => {
         </ul>
 
         {/* 2. How We Collect Information */}
-        <p className="font-bold text-2xl md:text-3xl font-serif">
+        <p className="font-bold text-xl md:text-3xl font-serif">
           2. How We Collect Information
         </p>
         <p className="text-lg md:text-xl">
@@ -132,7 +132,7 @@ const PrivacyPolicyPageContent: FC = () => {
         </ul>
 
         {/* 3. How We Use Your Information */}
-        <p className="font-bold text-2xl md:text-3xl font-serif">
+        <p className="font-bold text-xl md:text-3xl font-serif">
           3. How We Use Your Information
         </p>
         <p className="text-lg md:text-xl">
@@ -169,7 +169,7 @@ const PrivacyPolicyPageContent: FC = () => {
         </ul>
 
         {/* 4. How We Share Your Information */}
-        <p className="font-bold text-2xl md:text-3xl font-serif">
+        <p className="font-bold text-xl md:text-3xl font-serif">
           4. How We Share Your Information
         </p>
         <p className="text-lg md:text-xl">
@@ -200,7 +200,7 @@ const PrivacyPolicyPageContent: FC = () => {
         </ul>
 
         {/* 5. Data Security */}
-        <p className="font-bold text-2xl md:text-3xl font-serif">
+        <p className="font-bold text-xl md:text-3xl font-serif">
           5. Data Security
         </p>
         <p className="text-lg md:text-xl">
@@ -217,7 +217,7 @@ const PrivacyPolicyPageContent: FC = () => {
         </ul>
 
         {/* 6. Data Retention */}
-        <p className="font-bold text-2xl md:text-3xl font-serif">
+        <p className="font-bold text-xl md:text-3xl font-serif">
           6. Data Retention
         </p>
         <p className="text-lg md:text-xl">
@@ -247,7 +247,7 @@ const PrivacyPolicyPageContent: FC = () => {
         </ul>
 
         {/* 7. Your Rights */}
-        <p className="font-bold text-2xl md:text-3xl font-serif">
+        <p className="font-bold text-xl md:text-3xl font-serif">
           7. Your Rights
         </p>
         <p className="text-lg md:text-xl">
@@ -291,7 +291,7 @@ const PrivacyPolicyPageContent: FC = () => {
           provided below.
         </p>
 
-        <p className="font-bold text-2xl md:text-3xl font-serif">
+        <p className="font-bold text-xl md:text-3xl font-serif">
           8. Changes to This Privacy Policy
         </p>
         <p className="text-lg md:text-xl">
@@ -305,9 +305,12 @@ const PrivacyPolicyPageContent: FC = () => {
         <p className="text-lg md:text-xl">
           If you have any questions or concerns about this Privacy Policy or our
           data practices, please{" "}
-          <Link className="text-red-600 hover:underline" to="/contact-info">
+          <TransitionLink
+            className="text-red-400 transition hover:text-red-300 hover:underline"
+            to="/contact-info"
+          >
             contact us
-          </Link>
+          </TransitionLink>
           .
         </p>
         <p className="text-lg md:text-xl">
@@ -319,7 +322,7 @@ const PrivacyPolicyPageContent: FC = () => {
 }
 
 export const PrivacyPolicyPage: FC = () => (
-  <StandartLayout>
+  <StandartLayout footerTopFade headerBottomFade>
     <PrivacyPolicyPageContent />
   </StandartLayout>
 )

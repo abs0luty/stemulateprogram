@@ -17,7 +17,9 @@ export const AcademicTabSection = ({
 }: SectionProps & { onNext: () => void; onPrevious: () => void }) => (
   <TabsContent value="academic" className="space-y-6">
     <div className="space-y-2">
-      <h2 className="text-3xl font-semibold">Academic Background</h2>
+      <h2 className="text-2xl font-semibold sm:text-3xl">
+        Academic Background
+      </h2>
       <p className="text-muted-foreground">
         Please provide details about your education and test scores.
       </p>
@@ -101,9 +103,9 @@ export const AcademicTabSection = ({
     </div>
 
     <SectionNavigation
-      previousLabel="Previous: Personal Information"
+      previousLabel="Personal Information"
       onPrevious={onPrevious}
-      nextLabel="Next: Parent Information"
+      nextLabel="Parent Information"
       onNext={onNext}
     />
   </TabsContent>

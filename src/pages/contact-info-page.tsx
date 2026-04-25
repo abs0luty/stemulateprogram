@@ -3,42 +3,55 @@ import { StandartLayout } from "@/layout/standard-layout"
 
 const ContactInfoPageContent: FC = () => {
   return (
-    <main className="min-h-screen bg-white text-black py-24 px-4 md:px-8 flex flex-col items-center">
-      <div className="max-w-5xl mx-auto space-y-8 w-full">
-        <p className="font-bold text-3xl sm:text-4xl md:text-5xl font-serif">
-          Contact Information
-        </p>
-        <p className="text-base md:text-xl">
-          We're here to help! Please feel free to reach out to us with any
-          inquiries.
-        </p>
-        <p className="text-base md:text-xl">
-          Email:{" "}
-          <a
-            href="mailto:admissions@stemulateprogram.com"
-            className="hover:underline text-red-600 hover:text-red-800"
-          >
-            admissions@stemulateprogram.com
-          </a>
-          <br />
-          Phone number:{" "}
-          <a
-            href="tel:+77753036077"
-            className="hover:underline text-red-600 hover:text-red-800"
-          >
-            +7 (775) 303-6077
-          </a>
-        </p>
-        <p className="text-base md:text-xl">
-          We aim to respond to all inquiries within 24-48 business hours. <br />
-        </p>
+    <main className="flex min-h-screen items-center bg-neutral-900 px-4 py-24 text-neutral-100 md:px-8">
+      <div className="mx-auto grid w-full max-w-6xl gap-6 md:grid-cols-[minmax(0,1.35fr)_auto] md:items-center">
+        <section className="max-w-4xl space-y-6">
+          <p className="font-serif text-3xl font-bold sm:text-3xl md:text-5xl">
+            Contact Information
+          </p>
+          <p className="text-base leading-7 text-neutral-300 md:text-xl">
+            We&apos;re here to help. Reach out with questions about admissions,
+            programs, timelines, or anything else related to STEMulate.
+          </p>
+          <div className="space-y-4 text-base md:text-xl">
+            <p className="leading-7 text-neutral-200">
+              Email:{" "}
+              <a
+                href="mailto:admissions@stemulateprogram.com"
+                className="text-red-400 transition hover:text-red-300 hover:underline"
+              >
+                admissions@stemulateprogram.com
+              </a>
+            </p>
+            <p className="leading-7 text-neutral-200">
+              Phone number:{" "}
+              <a
+                href="tel:+77753036077"
+                className="text-red-400 transition hover:text-red-300 hover:underline"
+              >
+                +7 (775) 303-6077
+              </a>
+            </p>
+            <p className="leading-7 text-neutral-300">
+              We aim to respond to all inquiries within 24-48 business hours.
+            </p>
+          </div>
+        </section>
+
+        <section className="flex justify-center md:justify-start">
+          <img
+            src="/contact.svg"
+            alt="Contact STEMulate"
+            className="w-full max-w-[9rem] md:max-w-[12rem]"
+          />
+        </section>
       </div>
     </main>
   )
 }
 
 export const ContactInfoPage: FC = () => (
-  <StandartLayout>
+  <StandartLayout footerTopFade headerBottomFade>
     <ContactInfoPageContent />
   </StandartLayout>
 )

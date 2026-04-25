@@ -8,12 +8,38 @@
       name="viewport"
       content="width=device-width, initial-scale=1, user-scalable=no, shrink-to-fit=no, viewport-fit=cover"
     />
-    <title>STEMulate Research Program</title>
+    <title>STEMulate Research Program | 2026 Research Bootcamp & Mentorship</title>
     <meta
       name="description"
-      content="Join STEMulate - a world-class research program, uniting students from over 20 countries, mentored by experts from top institutions like Stanford, Purdue, and UC Berkeley."
+      content="Join STEMulate's 2026 research program for motivated students: a research writing bootcamp, one-on-one mentorship, global cohort, and guidance toward original research projects."
     />
     <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://www.stemulateprogram.com/" />
+    <meta property="og:site_name" content="STEMulate Research Program" />
+    <meta
+      property="og:title"
+      content="STEMulate Research Program | 2026 Research Bootcamp & Mentorship"
+    />
+    <meta
+      property="og:description"
+      content="Join STEMulate's 2026 research program for motivated students: a research writing bootcamp, one-on-one mentorship, global cohort, and guidance toward original research projects."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.stemulateprogram.com/" />
+    <meta property="og:image" content="https://www.stemulateprogram.com/image.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="STEMulate Research Program | 2026 Research Bootcamp & Mentorship"
+    />
+    <meta
+      name="twitter:description"
+      content="Join STEMulate's 2026 research program for motivated students: a research writing bootcamp, one-on-one mentorship, global cohort, and guidance toward original research projects."
+    />
+    <meta
+      name="twitter:image"
+      content="https://www.stemulateprogram.com/image.png"
+    />
 
     <style>
       html,
@@ -44,19 +70,14 @@
     <script src="/scripts/three.min.js"></script>
     <script>
       ;(function () {
-        var minimumLoadingDuration = 1000
+        var minimumLoadingDuration = 500
         var loadingStartedAt = Date.now()
         var progressValue = 0
         var progressTimer = null
 
         function setProgress(value) {
-          var progressBar = document.getElementById("loadingProgressBar")
           var progressLabel = document.getElementById("loadingProgressLabel")
           progressValue = Math.max(progressValue, Math.min(100, value))
-
-          if (progressBar) {
-            progressBar.style.width = progressValue + "%"
-          }
 
           if (progressLabel) {
             progressLabel.textContent = Math.round(progressValue) + "%"
@@ -135,16 +156,7 @@
       "
     >
       <div class="loading-shell">
-        <div class="loading-title">
-          Loading
-          <span class="dot">.</span>
-          <span class="dot">.</span>
-          <span class="dot">.</span>
-        </div>
-        <div class="loading-progress-track">
-          <div id="loadingProgressBar" class="loading-progress-bar"></div>
-        </div>
-        <div id="loadingProgressLabel" class="loading-progress-label">0%</div>
+        <div id="loadingProgressLabel" class="loading-progress-counter">0%</div>
       </div>
     </div>
 
@@ -154,61 +166,19 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 16px;
-      }
-
-      .loading-title {
-        display: flex;
-        align-items: center;
         justify-content: center;
       }
 
-      .loading-progress-track {
-        width: 100%;
-        height: 8px;
-        overflow: hidden;
-        border-radius: 999px;
-        background: rgba(255, 255, 255, 0.14);
-        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
-      }
-
-      .loading-progress-bar {
-        width: 0%;
-        height: 100%;
-        border-radius: inherit;
-        background: linear-gradient(90deg, #ef4444 0%, #f87171 100%);
-        transition: width 0.18s ease-out;
-      }
-
-      .loading-progress-label {
-        font-size: 0.95rem;
+      .loading-progress-counter {
+        min-width: 4ch;
+        text-align: center;
+        font-size: 3.25rem;
         font-weight: 600;
         letter-spacing: 0.08em;
-        color: rgba(255, 255, 255, 0.72);
-      }
-
-      .dot {
-        animation: dot-pulse 1.5s infinite;
-      }
-
-      .dot:nth-child(2) {
-        animation-delay: 0.5s;
-      }
-
-      .dot:nth-child(3) {
-        animation-delay: 1s;
-      }
-
-      @keyframes dot-pulse {
-        0% {
-          opacity: 0.2;
-        }
-        50% {
-          opacity: 1;
-        }
-        100% {
-          opacity: 0.2;
-        }
+        line-height: 1;
+        color: rgba(255, 255, 255, 0.86);
+        font-variant-numeric: tabular-nums;
+        text-shadow: 0 0 24px rgba(248, 113, 113, 0.18);
       }
     </style>
   </body>

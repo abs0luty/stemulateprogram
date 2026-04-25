@@ -11,6 +11,8 @@ import { PrivacyPolicyPage } from "./pages/privacy-policy-page"
 import { TermsOfServicePage } from "./pages/terms-of-service-page"
 import { lazy, useEffect } from "react"
 import { preloadWorldMapGeography } from "./components/landing/world-map"
+import { RouteTransition } from "./components/common/route-transition"
+import { RouteSeo } from "./components/common/route-seo"
 
 const NotFoundPage = lazy(() =>
   import("./pages/404").then((module) => ({ default: module.NotFoundPage }))
@@ -28,6 +30,8 @@ export const App = () => {
       <TooltipProvider delayDuration={50}>
         <Toaster />
         <Router>
+          <RouteSeo />
+          <RouteTransition />
           <Routes>
             <Route Component={TermsOfServicePage} path="/tos" />
             <Route Component={PrivacyPolicyPage} path="/privacy-policy" />

@@ -6,15 +6,13 @@ export const WorkWithExpertsSection: FC = () => (
     <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold mb-4 ">
       <StaggerText
         className="font-serif"
-        text="Work With International Experts"
+        text="Learn From World-Class Researchers"
       />
     </h2>
     <p className="sm:text-xl md:text-2xl mb-6">
-      Our mentors are PhD holders and current graduate students from prestigious
-      universities. Each mentor is carefully selected to ensure they can provide
-      high-quality guidance and mentorship. Our mentors work closely with
-      students, helping them navigate the complexities of academic research,
-      data analysis, and scientific writing.
+      Work one-on-one with carefully selected PhD researchers and graduate
+      mentors from leading universities who help you turn strong ideas into
+      real research, sharp analysis, and confident academic writing.
     </p>
     <img
       src="universities.png"

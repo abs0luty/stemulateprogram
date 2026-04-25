@@ -57,7 +57,9 @@ export const EmailInputForm: FC<EmailInputFormProps> = ({
 
         {sendCodeError && <p className="text-red-500 text-sm">{sendCodeError}</p>}
 
-        <HCaptcha sitekey={HCAPTCHA_SITE_KEY} onVerify={setCaptchaToken} />
+        <div className="flex min-h-[78px] items-start justify-center md:justify-start">
+          <HCaptcha sitekey={HCAPTCHA_SITE_KEY} onVerify={setCaptchaToken} />
+        </div>
 
         <div className="flex flex-col md:flex-row gap-2 md:gap-4">
           <Button

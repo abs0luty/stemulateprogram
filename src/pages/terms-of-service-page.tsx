@@ -1,17 +1,17 @@
 import { FC } from "react"
 import { StandartLayout } from "@/layout/standard-layout"
-import { Link } from "react-router-dom"
+import { TransitionLink } from "@/components/common/transition-link"
 
 const TermsOfServicePageContent: FC = () => {
   return (
-    <main className="min-h-screen bg-white text-black py-24 px-4 md:px-8 flex flex-col items-center">
-      <div className="max-w-5xl mx-auto space-y-8 w-full">
+    <main className="min-h-screen bg-neutral-900 px-4 py-24 text-neutral-100 md:px-8">
+      <div className="mx-auto w-full max-w-5xl space-y-8">
         {/* Title */}
-        <p className="font-bold text-3xl md:text-4xl font-serif">
+        <p className="font-bold text-2xl md:text-4xl font-serif">
           Terms of Service for STEMulate Research Program
         </p>
         {/* Effective Date */}
-        <p className="text-xl sm:text-2xl">
+        <p className="text-lg sm:text-xl md:text-2xl">
           <b>Effective Date: June 25, 2025.</b>
         </p>
         {/* Introduction Paragraph 1 */}
@@ -30,10 +30,10 @@ const TermsOfServicePageContent: FC = () => {
           Terms, you may not use the application portal or participate in the
           Program.
         </p>
-        <hr className="border-t border-gray-300" />
+        <hr className="border-t border-neutral-700" />
 
         {/* 1. Acceptance of Terms */}
-        <p className="font-bold text-2xl md:text-3xl font-serif">
+        <p className="font-bold text-xl md:text-3xl font-serif">
           1. Acceptance of Terms
         </p>
         <p className="text-lg md:text-xl">
@@ -46,7 +46,7 @@ const TermsOfServicePageContent: FC = () => {
         </p>
 
         {/* 2. Program Overview */}
-        <p className="font-bold text-2xl md:text-3xl font-serif">
+        <p className="font-bold text-xl md:text-3xl font-serif">
           2. Program Overview
         </p>
         <p className="text-lg md:text-xl">
@@ -58,7 +58,7 @@ const TermsOfServicePageContent: FC = () => {
         </p>
 
         {/* 3. Eligibility */}
-        <p className="font-bold text-2xl md:text-3xl font-serif">
+        <p className="font-bold text-xl md:text-3xl font-serif">
           3. Eligibility
         </p>
         <ul className="list-disc pl-6 text-lg md:text-xl space-y-2">
@@ -78,7 +78,7 @@ const TermsOfServicePageContent: FC = () => {
         </ul>
 
         {/* 4. Application Process */}
-        <p className="font-bold text-2xl md:text-3xl font-serif">
+        <p className="font-bold text-xl md:text-3xl font-serif">
           4. Application Process
         </p>
         <ul className="list-disc pl-6 text-lg md:text-xl space-y-2">
@@ -98,7 +98,7 @@ const TermsOfServicePageContent: FC = () => {
         </ul>
 
         {/* 5. Participant Responsibilities */}
-        <p className="font-bold text-2xl md:text-3xl font-serif">
+        <p className="font-bold text-xl md:text-3xl font-serif">
           5. Participant Responsibilities
         </p>
         <p className="text-lg md:text-xl">
@@ -126,7 +126,7 @@ const TermsOfServicePageContent: FC = () => {
         </ul>
 
         {/* 6. Intellectual Property */}
-        <p className="font-bold text-2xl md:text-3xl font-serif">
+        <p className="font-bold text-xl md:text-3xl font-serif">
           6. Intellectual Property
         </p>
         <ul className="list-disc pl-6 text-lg md:text-xl space-y-2">
@@ -155,7 +155,7 @@ const TermsOfServicePageContent: FC = () => {
         </ul>
 
         {/* 7. Confidentiality */}
-        <p className="font-bold text-2xl md:text-3xl font-serif">
+        <p className="font-bold text-xl md:text-3xl font-serif">
           7. Confidentiality
         </p>
         <ul className="list-disc pl-6 text-lg md:text-xl space-y-2">
@@ -174,7 +174,7 @@ const TermsOfServicePageContent: FC = () => {
         </ul>
 
         {/* 8. Disclaimers */}
-        <p className="font-bold text-2xl md:text-3xl font-serif">
+        <p className="font-bold text-xl md:text-3xl font-serif">
           8. Disclaimers
         </p>
         <p className="text-lg md:text-xl">
@@ -187,7 +187,7 @@ const TermsOfServicePageContent: FC = () => {
         </p>
 
         {/* 9. Limitation of Liability */}
-        <p className="font-bold text-2xl md:text-3xl font-serif">
+        <p className="font-bold text-xl md:text-3xl font-serif">
           9. Limitation of Liability
         </p>
         <p className="text-lg md:text-xl">
@@ -206,7 +206,7 @@ const TermsOfServicePageContent: FC = () => {
         </p>
 
         {/* 10. Indemnification */}
-        <p className="font-bold text-2xl md:text-3xl font-serif">
+        <p className="font-bold text-xl md:text-3xl font-serif">
           10. Indemnification
         </p>
         <p className="text-lg md:text-xl">
@@ -222,7 +222,7 @@ const TermsOfServicePageContent: FC = () => {
         </p>
 
         {/* 11. Termination */}
-        <p className="font-bold text-2xl md:text-3xl font-serif">
+        <p className="font-bold text-xl md:text-3xl font-serif">
           11. Termination
         </p>
         <p className="text-lg md:text-xl">
@@ -234,7 +234,7 @@ const TermsOfServicePageContent: FC = () => {
         </p>
 
         {/* 12. Governing Law */}
-        <p className="font-bold text-2xl md:text-3xl font-serif">
+        <p className="font-bold text-xl md:text-3xl font-serif">
           12. Governing Law
         </p>
         <p className="text-lg md:text-xl">
@@ -244,7 +244,7 @@ const TermsOfServicePageContent: FC = () => {
         </p>
 
         {/* 13. Changes to These Terms */}
-        <p className="font-bold text-2xl md:text-3xl font-serif">
+        <p className="font-bold text-xl md:text-3xl font-serif">
           13. Changes to These Terms
         </p>
         <p className="text-lg md:text-xl">
@@ -259,9 +259,12 @@ const TermsOfServicePageContent: FC = () => {
 
         <p className="text-lg md:text-xl">
           If you have any questions or concerns about this document, please{" "}
-          <Link className="text-red-600 hover:underline" to="/contact-info">
+          <TransitionLink
+            className="text-red-400 transition hover:text-red-300 hover:underline"
+            to="/contact-info"
+          >
             contact us
-          </Link>
+          </TransitionLink>
           .
         </p>
         <p className="text-lg md:text-xl">
@@ -273,7 +276,7 @@ const TermsOfServicePageContent: FC = () => {
 }
 
 export const TermsOfServicePage: FC = () => (
-  <StandartLayout>
+  <StandartLayout footerTopFade headerBottomFade>
     <TermsOfServicePageContent />
   </StandartLayout>
 )

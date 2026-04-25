@@ -2,7 +2,7 @@ import { FC } from "react"
 import { StandartLayout } from "@/layout/standard-layout"
 import { CheckCircle2Icon, StarsIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Link } from "react-router-dom"
+import { TransitionLink } from "@/components/common/transition-link"
 
 const ProgramsPageContent: FC = () => {
   const programs = [
@@ -37,7 +37,7 @@ const ProgramsPageContent: FC = () => {
   ]
 
   return (
-    <main className="min-h-screen bg-white px-4 py-20 text-black md:px-8">
+    <main className="min-h-screen bg-neutral-900 px-4 py-20 text-neutral-100 md:px-8">
       <div className="mx-auto flex w-full max-w-5xl flex-col gap-10">
         <section className="space-y-3">
           <div className="space-y-4">
@@ -45,7 +45,7 @@ const ProgramsPageContent: FC = () => {
               <h1 className="max-w-lg text-4xl font-semibold leading-tight md:text-5xl">
                 Our <span className="font-serif">Programs</span>
               </h1>
-              <p className="max-w-2xl text-lg leading-8 text-gray-600">
+              <p className="max-w-2xl text-lg leading-8 text-neutral-300">
                 We guide students through a clear two-phase pathway: first,
                 they build the research fundamentals; then, they turn that
                 foundation into an original project with close mentorship.
@@ -57,7 +57,7 @@ const ProgramsPageContent: FC = () => {
         <section className="relative pl-10 md:pl-12">
           <div
             aria-hidden="true"
-            className="absolute left-3 top-2 h-[calc(100%-0.5rem)] w-px bg-neutral-200 md:left-4"
+            className="absolute left-3 top-2 h-[calc(100%-0.5rem)] w-px bg-neutral-700 md:left-4"
           />
           <div className="space-y-8">
             {programs.map((program) => (
@@ -65,37 +65,37 @@ const ProgramsPageContent: FC = () => {
                 key={program.name}
                 className="relative grid gap-5 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]"
               >
-                <div className="absolute -left-10 top-1.5 flex h-6 w-6 items-center justify-center rounded-full border border-neutral-300 bg-white md:-left-12">
-                  <div className="h-2.5 w-2.5 rounded-full bg-neutral-700" />
+                <div className="absolute -left-10 top-1.5 flex h-6 w-6 items-center justify-center rounded-full border border-neutral-700 bg-neutral-900 md:-left-12">
+                  <div className="h-2.5 w-2.5 rounded-full bg-red-500" />
                 </div>
 
                 <div className="space-y-4">
                   <div className="space-y-2">
-                    <span className="text-sm font-semibold text-gray-500">
+                    <span className="text-sm font-semibold text-red-400">
                       {program.phase}
                     </span>
                     <h2 className="max-w-sm text-2xl font-semibold leading-tight md:text-3xl">
                       <span className="font-serif">{program.name}</span>
                     </h2>
-                    <p className="max-w-xl text-base leading-7 text-gray-600">
+                    <p className="max-w-xl text-base leading-7 text-neutral-300">
                       {program.description}
                     </p>
                   </div>
                 </div>
 
-                <div className="rounded-[1.25rem] border border-neutral-200 bg-white p-5 md:p-6">
+                <div className="rounded-[1.25rem] border border-neutral-800 bg-neutral-950/70 p-5 md:p-6">
                   <ul className="mt-4 space-y-3">
                     {program.features.map((feature) => (
                       <li
                         key={feature}
-                        className="flex items-start gap-3 text-sm leading-6 text-gray-700 md:text-base"
+                        className="flex items-start gap-3 text-sm leading-6 text-neutral-200 md:text-base"
                       >
-                        <CheckCircle2Icon className="mt-0.5 h-4 w-4 shrink-0 text-neutral-500" />
+                        <CheckCircle2Icon className="mt-0.5 h-4 w-4 shrink-0 text-red-400" />
                         <span>{feature}</span>
                       </li>
                     ))}
                   </ul>
-                  <p className="mt-5 border-t border-neutral-200 pt-5 text-sm leading-6 text-gray-600 md:text-base">
+                  <p className="mt-5 border-t border-neutral-800 pt-5 text-sm leading-6 text-neutral-300 md:text-base">
                     {program.outcome}
                   </p>
                 </div>
@@ -104,17 +104,17 @@ const ProgramsPageContent: FC = () => {
           </div>
         </section>
 
-        <section className="rounded-[1.5rem] border border-neutral-200 bg-neutral-50 p-6 md:p-8">
+        <section className="rounded-[1.5rem] border border-neutral-800 bg-neutral-950/70 p-6 md:p-8">
           <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
             <div className="max-w-2xl space-y-2">
               <p className="text-2xl font-semibold leading-tight">
                 Interested in joining STEMulate?
               </p>
-              <p className="text-base leading-7 text-gray-600">
+              <p className="text-base leading-7 text-neutral-300">
                 Learn more about the application process and what to expect.
               </p>
             </div>
-            <Link
+            <TransitionLink
               to="/apply"
               className="w-fit"
             >
@@ -124,7 +124,7 @@ const ProgramsPageContent: FC = () => {
                 <StarsIcon className="h-5 w-5" />
                 Apply now
               </Button>
-            </Link>
+            </TransitionLink>
           </div>
         </section>
       </div>
@@ -133,7 +133,7 @@ const ProgramsPageContent: FC = () => {
 }
 
 export const ProgramsPage: FC = () => (
-  <StandartLayout>
+  <StandartLayout footerTopFade headerBottomFade>
     <ProgramsPageContent />
   </StandartLayout>
 )

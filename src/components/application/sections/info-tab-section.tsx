@@ -1,5 +1,5 @@
+import { Button } from "@/components/ui/button"
 import { TabsContent } from "@/components/ui/tabs"
-import { SectionNavigation } from "./section-navigation"
 
 export const InfoTabSection = ({
   onStart,
@@ -13,7 +13,7 @@ export const InfoTabSection = ({
       <div>
         <div className="space-y-6">
           <div>
-            <h2 className="text-3xl font-semibold mb-6 mt-6">
+            <h2 className="mb-6 mt-6 text-2xl font-semibold sm:text-3xl">
               Program Overview:
             </h2>
             <p>
@@ -87,22 +87,19 @@ export const InfoTabSection = ({
               <b>Final Application Deadline</b>: May 31st at 11:59 PM (UTC-5).
             </p>
           </div>
-
-          <div>
-            <p>
-              For any questions please contact us at:
-              <br />
-              <i>admissions@stemulateprogram.com</i>
-            </p>
-          </div>
         </div>
       </div>
     </div>
 
-    <SectionNavigation
-      nextLabel="Start Application"
-      onNext={onStart}
-      disabled={isLoading}
-    />
+    <div className="mt-20 flex justify-end">
+      <Button
+        type="button"
+        onClick={onStart}
+        className="w-full bg-neutral-900 hover:bg-neutral-800 sm:w-auto"
+        disabled={isLoading}
+      >
+        Start Application
+      </Button>
+    </div>
   </TabsContent>
 )

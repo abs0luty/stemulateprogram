@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { TransitionLink } from "@/components/common/transition-link"
 import { WorldMapSimple } from "./world-map"
 import { StaggerText } from "@/components/ui/stagger-text"
 import { StarsIcon } from "lucide-react"
@@ -42,17 +42,14 @@ export const HeroSection: FC = () => {
       </p>
 
       <div className="flex justify-center">
-        <Link to="apply">
+        <TransitionLink to="apply">
           <Button
-            className="text-sm sm:text-base bg-red-600
-    hover:bg-red-700 text-white
-    py-6 px-5 rounded-xl items-center flex space-x-1
-    transition duration-300 ease-in-out"
+            className="flex items-center space-x-1 rounded-xl bg-red-600 px-5 py-6 text-sm text-white shadow-[0_0_0_1px_rgba(220,38,38,0.08),0_0_32px_rgba(220,38,38,0.28)] transition duration-300 ease-in-out hover:bg-red-700 hover:shadow-[0_0_0_1px_rgba(220,38,38,0.12),0_0_40px_rgba(220,38,38,0.34)] sm:text-base"
           >
             <StarsIcon className="w-5 h-5" />
             <p>Apply For Program</p>
           </Button>
-        </Link>
+        </TransitionLink>
       </div>
       <div className="mx-auto mt-10 mb-8 w-full md:max-w-4xl lg:max-w-5xl">
         <WorldMapSimple highlightedCountries={highlightedCountries} />

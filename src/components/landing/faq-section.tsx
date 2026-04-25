@@ -47,9 +47,9 @@ export const FAQSection: FC = () => (
   <section className="px-5 md:px-14 bg-neutral-900 text-white">
     <Accordion type="single" collapsible className="w-full">
       {faqs.map((faq, index) => (
-        <AccordionItem key={index} value={`item-${index}`}>
+          <AccordionItem key={index} value={`item-${index}`}>
           <AccordionTrigger>
-            <p className="text-xl md:text-2xl font-serif">{faq.question}</p>
+            <p className="text-lg md:text-2xl font-serif">{faq.question}</p>
           </AccordionTrigger>
           <AccordionContent>
             <p className="md:text-xl">{faq.answer}</p>

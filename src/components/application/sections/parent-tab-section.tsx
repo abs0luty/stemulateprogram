@@ -18,7 +18,9 @@ export const ParentTabSection = ({
 }: SectionProps & { onNext: () => void; onPrevious: () => void }) => (
   <TabsContent value="parent" className="space-y-6">
     <div className="space-y-2">
-      <h2 className="text-3xl font-semibold">Parent Information</h2>
+      <h2 className="text-2xl font-semibold sm:text-3xl">
+        Parent Information
+      </h2>
       <p className="text-muted-foreground">
         Please provide your parent or guardian&apos;s contact information.
       </p>
@@ -84,9 +86,9 @@ export const ParentTabSection = ({
 
     <div>
       <SectionNavigation
-        previousLabel="Previous: Academic Background"
+        previousLabel="Academic Background"
         onPrevious={onPrevious}
-        nextLabel="Next: Research Interests"
+        nextLabel="Research Interests"
         onNext={onNext}
       />
     </div>

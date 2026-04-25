@@ -121,3 +121,53 @@
     @apply bg-background text-foreground;
   }
 }
+
+.site-loader-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  color: white;
+  background: rgb(23 23 23);
+  pointer-events: none;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.site-loader-overlay-light {
+  color: rgb(23 23 23);
+  background: rgb(255 255 255);
+}
+
+.loading-shell {
+  width: min(320px, calc(100vw - 48px));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-progress-counter {
+  min-width: 4ch;
+  text-align: center;
+  font-size: 3.25rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.86);
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 0 24px rgba(248, 113, 113, 0.18);
+}
+
+.loading-progress-counter-light {
+  color: rgba(23, 23, 23, 0.92);
+  text-shadow: none;
+}
+
+.site-loader-overlay-light .loading-progress-counter,
+.site-loader-overlay-light .loading-progress-counter-light {
+  color: rgba(23, 23, 23, 0.92);
+  text-shadow: none;
+}

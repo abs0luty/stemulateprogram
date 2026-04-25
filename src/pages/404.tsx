@@ -1,5 +1,5 @@
 import { FC } from "react"
-import { Link } from "react-router-dom"
+import { TransitionLink } from "@/components/common/transition-link"
 
 export const NotFoundPage: FC = () => (
   <div className="flex items-center min-h-screen px-4 py-12 sm:px-6 md:px-8 lg:px-12 xl:px-16">
@@ -12,12 +12,12 @@ export const NotFoundPage: FC = () => (
           It looks like you've dared to dive into an unknown digital reality.
         </p>
       </div>
-      <Link
+      <TransitionLink
         to="/"
         className="inline-flex h-10 items-center rounded-md bg-gray-900 px-4 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300"
       >
         Return to the home page
-      </Link>
+      </TransitionLink>
     </div>
   </div>
 )

@@ -18,7 +18,9 @@ export const PersonalTabSection = ({
 }: SectionProps & { onNext: () => void }) => (
   <TabsContent value="personal" className="space-y-6">
     <div className="space-y-2">
-      <h2 className="text-3xl font-semibold">Personal Information</h2>
+      <h2 className="text-2xl font-semibold sm:text-3xl">
+        Personal Information
+      </h2>
       <p className="text-muted-foreground">Please provide your contact details.</p>
     </div>
 
@@ -96,6 +98,6 @@ export const PersonalTabSection = ({
       )}
     />
 
-    <SectionNavigation nextLabel="Next: Academic Background" onNext={onNext} />
+    <SectionNavigation nextLabel="Academic Background" onNext={onNext} />
   </TabsContent>
 )

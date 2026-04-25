@@ -15,7 +15,6 @@ import {
 } from "lucide-react"
 import { toast } from "@/hooks/use-toast"
 import { AuthSection } from "./auth/auth-section"
-import { ApplicationLoadingState } from "./application-loading-state"
 import { supabaseClient } from "@/supabase"
 import confetti from "canvas-confetti"
 import {
@@ -45,14 +44,12 @@ import {
   PersonalTabSection,
   ResearchTabSection,
 } from "./sections"
+import { SiteLoader, SiteLoaderOverlay } from "@/components/common/site-loader"
 
 export const ApplicationForm = () => {
   const [loading, setLoading] = useState(true)
   const [user, setUser] = useState<any>(null)
   const [isAuthChecked, setIsAuthChecked] = useState(false)
-  const [loadingStage, setLoadingStage] = useState<"session" | "application">(
-    "session"
-  )
   const [applicationExists, setApplicationExists] = useState(false)
   const [activeTab, setActiveTab] = useState<ApplicationTab>("info")
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -69,8 +66,6 @@ export const ApplicationForm = () => {
   }
 
   useEffect(() => {
-    setLoadingStage("session")
-
     supabaseClient.auth.getSession().then(({ data }) => {
       setIsAuthChecked(true)
 
@@ -106,7 +101,6 @@ export const ApplicationForm = () => {
           setUser(null)
           setApplicationExists(false)
           setLoading(false)
-          setLoadingStage("session")
         }
 
         setIsAuthChecked(true)
@@ -120,7 +114,6 @@ export const ApplicationForm = () => {
 
   const checkApplicationExistence = async (userId: string) => {
     setLoading(true)
-    setLoadingStage("application")
 
     try {
       const { data: applications, error } = await supabaseClient
@@ -292,7 +285,11 @@ export const ApplicationForm = () => {
   }
 
   if (!isAuthChecked) {
-    return <ApplicationLoadingState stage={loadingStage} />
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-white px-4">
+        <SiteLoader compact theme="light" />
+      </div>
+    )
   }
 
   if (!user) {
@@ -308,6 +305,22 @@ export const ApplicationForm = () => {
       <div
         className={loading ? "pointer-events-none select-none opacity-35" : ""}
       >
+        {!applicationExists ? (
+          <div className="mb-6 border-b border-neutral-200 pb-4 space-y-2">
+            <h1 className="text-2xl font-semibold text-neutral-950">
+              Application Portal
+            </h1>
+            <p className="text-sm text-neutral-600">
+              For any questions please contact us at:{" "}
+              <a
+                href="mailto:admissions@stemulateprogram.com"
+                className="font-medium text-neutral-900 underline underline-offset-4"
+              >
+                admissions@stemulateprogram.com
+              </a>
+            </p>
+          </div>
+        ) : null}
         <div className="flex justify-end mt-12 space-x-2">
           <Button className="bg-neutral-900 hover:bg-neutral-800 border-b-0 rounded-b-none">
             <UserIcon />
@@ -346,7 +359,7 @@ export const ApplicationForm = () => {
                 <div className="relative mb-8">
                   <TabsList
                     ref={tabsRef}
-                    className="bg-white flex w-full overflow-x-auto snap-x scrollbar-none py-1 justify-start"
+                    className="flex w-full justify-start gap-2 overflow-x-auto overflow-y-hidden border-b border-neutral-200 bg-white snap-x scrollbar-none"
                     style={{ scrollBehavior: "smooth" }}
                   >
                     {tabOrder.map((tab, index) => {
@@ -357,9 +370,7 @@ export const ApplicationForm = () => {
                           key={tab}
                           value={tab}
                           disabled={loading}
-                          className={`data-[state=active]:shadow-none text-sm whitespace-nowrap px-3 snap-start ${
-                            activeTab === tab ? "active-tab" : ""
-                          }`}
+                          className="snap-start whitespace-nowrap rounded-none border-b-[3px] border-transparent bg-white px-2 py-2.5 text-sm font-medium text-neutral-500 shadow-none outline-none transition hover:text-neutral-950 focus-visible:ring-0 focus-visible:ring-offset-0 data-[state=active]:border-red-600 data-[state=active]:font-semibold data-[state=active]:text-neutral-950 data-[state=active]:shadow-none"
                           onClick={() => scrollToTab(index)}
                         >
                           {tabLabels[tab]}
@@ -418,11 +429,7 @@ export const ApplicationForm = () => {
         </Card>
       </div>
 
-      {loading ? (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/45 px-4 backdrop-blur-[6px]">
-          <ApplicationLoadingState stage={loadingStage} variant="modal" />
-        </div>
-      ) : null}
+      <SiteLoaderOverlay active={loading} className="z-[70]" theme="light" />
 
       <AlertDialog
         open={showValidationDialog}

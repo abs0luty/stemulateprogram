@@ -27,7 +27,9 @@ export const ResearchTabSection = ({
   return (
     <TabsContent value="research" className="space-y-6">
       <div className="space-y-2">
-        <h2 className="text-3xl font-semibold">Research Interests</h2>
+        <h2 className="text-2xl font-semibold sm:text-3xl">
+          Research Interests
+        </h2>
         <p className="text-muted-foreground">
           Please select up to 3 fields of interest and describe your research
           interests.
@@ -145,9 +147,9 @@ export const ResearchTabSection = ({
       </div>
 
       <SectionNavigation
-        previousLabel="Previous: Parent Information"
+        previousLabel="Parent Information"
         onPrevious={onPrevious}
-        nextLabel="Next: Additional Information"
+        nextLabel="Additional Information"
         onNext={onNext}
       />
     </TabsContent>

@@ -1,6 +1,6 @@
 import { InstagramLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons"
 import { FC } from "react"
-import { Link } from "react-router-dom"
+import { TransitionLink } from "./transition-link"
 
 interface FooterLink {
   href: string
@@ -62,19 +62,19 @@ export const Footer: FC<FooterProps> = ({ withTopFade = false }) => (
     <div className="relative container mx-auto">
       <div className="flex flex-col md:flex-row items-center justify-between px-8 pb-8 pt-10 md:pt-12">
         <div className="mb-6 md:mb-0">
-          <Link to="/">
+          <TransitionLink to="/">
             <img className="p-2" src="logo.svg" alt="logo" />
-          </Link>
+          </TransitionLink>
         </div>
         <div className="grid grid-cols-2 gap-x-16 gap-y-4 mb-6 md:mb-0">
           {companyLinks.map(({ name, href }) => (
-            <Link
+            <TransitionLink
               key={name}
               to={href}
               className="hover:text-neutral-300 transition text-base md:text-lg"
             >
               {name}
-            </Link>
+            </TransitionLink>
           ))}
         </div>
         <div className="flex items-center space-x-6 mb-6 md:mb-0">
@@ -91,7 +91,7 @@ export const Footer: FC<FooterProps> = ({ withTopFade = false }) => (
         </div>
       </div>
       <div className="text-center py-4 text-gray-400 md:text-sm text-xs">
-        &copy; 2025 STEMulate Research Program. All rights reserved.
+        &copy; 2025-2026 STEMulate Research Program. All rights reserved.
       </div>
     </div>
   </footer>

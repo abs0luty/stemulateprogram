@@ -79,7 +79,7 @@ const AboutUsPageContent: FC = () => {
 }
 
 export const AboutUsPage: FC = () => (
-  <StandartLayout footerTopFade>
+  <StandartLayout footerTopFade headerBottomFade>
     <AboutUsPageContent />
   </StandartLayout>
 )

@@ -1,11 +1,15 @@
 .section-with-fixed-bg {
   position: relative;
-  z-index: 0;
-  overflow: hidden;
-  isolation: isolate;
-  background-image: url("/university.webp");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
+  z-index: -1;
+}
+
+.section-with-fixed-bg::before {
+  content: "";
+  background: url("/university.webp") no-repeat center center / cover;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
 }

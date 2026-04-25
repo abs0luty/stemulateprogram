@@ -1,7 +1,7 @@
 import { FC, useState } from "react"
-import { Link } from "react-router-dom"
 import { StandartLayout } from "@/layout/standard-layout"
 import { FileBoxIcon, PresentationIcon } from "lucide-react"
+import { TransitionLink } from "@/components/common/transition-link"
 
 interface Publication {
   name: string
@@ -96,12 +96,12 @@ const PublicationsPageContent: FC = () => {
           Here every student can get published their research paper and
           presentation. If you want to get published, please contact us. Haven't
           applied yet?{" "}
-          <Link
+          <TransitionLink
             to="/apply"
             className="underline text-red-600 hover:text-red-800 transition-colors duration-200"
           >
             Apply now!
-          </Link>
+          </TransitionLink>
         </p>
         <hr className="border-t border-gray-300" />
 
